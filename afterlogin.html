@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GamersHaven | Dashboard</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header with Navigation -->
+  <div id="header-placeholder"></div>
+
+  <!-- Hero Section for Welcome Message -->
+  <section class="hero-section">
+    <div id="particles-js"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <span class="title-line">WELCOME</span>
+        <span class="title-line">BACK</span>
+        <span class="title-line">GAMER</span>
+      </h1>
+      <p class="hero-subtitle">Your gaming adventure awaits with new challenges and rewards</p>
+      <div class="hero-buttons">
+        <a href="#my-games" class="btn primary-btn">My Games</a>
+        <a href="#upcoming-tournaments" class="btn secondary-btn">My Tournaments</a>
+      </div>
+    </div>
+    <div class="hero-overlay"></div>
+  </section>
+
+  <!-- User Stats Section -->
+  <section class="community" style="padding-top: var(--spacing-xl);">
+    <div class="section-header">
+      <h2>Your Gaming Profile</h2>
+      <p>Track your achievements and progress</p>
+    </div>
+    
+    <div class="community-stats">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+        <div class="stat-number">12</div>
+        <div class="stat-label">Tournaments Joined</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-gamepad"></i></div>
+        <div class="stat-number">28</div>
+        <div class="stat-label">Games Played</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-medal"></i></div>
+        <div class="stat-number">5</div>
+        <div class="stat-label">Achievements</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-star"></i></div>
+        <div class="stat-number">2450</div>
+        <div class="stat-label">XP Points</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- My Games Section -->
+  <section id="my-games" class="featured-games">
+    <div class="section-header">
+      <h2>My Games</h2>
+      <p>Your recently played and favorite games</p>
+    </div>
+    
+    <div class="games-grid">
+      <div class="game-card">
+        <div class="game-image">
+          <img src="/api/placeholder/300/200" alt="Cyber Nexus">
+          <div class="game-overlay">
+            <span class="game-category">Action</span>
+          </div>
+        </div>
+        <div class="game-info">
+          <h3>Cyber Nexus</h3>
+          <div class="game-meta">
+            <span class="game-rating"><i class="fas fa-star"></i> 4.8</span>
+            <span class="game-players"><i class="fas fa-clock"></i> 24h</span>
+          </div>
+          <a href="#" class="play-now">Continue</a>
+        </div>
+      </div>
+      
+      <div class="game-card">
+        <div class="game-image">
+          <img src="/api/placeholder/300/200" alt="Galactic Command">
+          <div class="game-overlay">
+            <span class="game-category">Strategy</span>
+          </div>
+        </div>
+        <div class="game-info">
+          <h3>Galactic Command</h3>
+          <div class="game-meta">
+            <span class="game-rating"><i class="fas fa-star"></i> 4.6</span>
+            <span class="game-players"><i class="fas fa-clock"></i> 16h</span>
+          </div>
+          <a href="#" class="play-now">Continue</a>
+        </div>
+      </div>
+      
+      <div class="game-card">
+        <div class="game-image">
+          <img src="/api/placeholder/300/200" alt="Eternal Realms">
+          <div class="game-overlay">
+            <span class="game-category">RPG</span>
+          </div>
+        </div>
+        <div class="game-info">
+          <h3>Eternal Realms</h3>
+          <div class="game-meta">
+            <span class="game-rating"><i class="fas fa-star"></i> 4.9</span>
+            <span class="game-players"><i class="fas fa-clock"></i> 42h</span>
+          </div>
+          <a href="#" class="play-now">Continue</a>
+        </div>
+      </div>
+      
+      <div class="game-card">
+        <div class="game-image">
+          <img src="/api/placeholder/300/200" alt="Tactical Ops">
+          <div class="game-overlay">
+            <span class="game-category">Shooter</span>
+          </div>
+        </div>
+        <div class="game-info">
+          <h3>Tactical Ops</h3>
+          <div class="game-meta">
+            <span class="game-rating"><i class="fas fa-star"></i> 4.7</span>
+            <span class="game-players"><i class="fas fa-clock"></i> 8h</span>
+          </div>
+          <a href="#" class="play-now">Continue</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- My Tournaments Section -->
+  <section id="upcoming-tournaments" class="tournaments">
+    <div class="section-header">
+      <h2>My Tournaments</h2>
+      <p>Tournaments you've registered for</p>
+    </div>
+    
+    <div class="tournament-cards">
+      <div class="tournament-card">
+        <div class="tournament-date">
+          <span class="day">25</span>
+          <span class="month">APR</span>
+        </div>
+        <div class="tournament-details">
+          <h3>Cyber Nexus Championship</h3>
+          <p>Global competitive tournament with $50,000 prize pool</p>
+          <div class="tournament-meta">
+            <span><i class="fas fa-user-group"></i> Team Phantom</span>
+            <span><i class="fas fa-clock"></i> 10:00 AM</span>
+          </div>
+        </div>
+        <a href="#" class="btn tournament-btn">Details</a>
+      </div>
+      
+      <div class="tournament-card">
+        <div class="tournament-date">
+          <span class="day">03</span>
+          <span class="month">MAY</span>
+        </div>
+        <div class="tournament-details">
+          <h3>Tactical Ops Invitational</h3>
+          <p>Exclusive invite-only tournament for elite players</p>
+          <div class="tournament-meta">
+            <span><i class="fas fa-user-group"></i> Team Phantom</span>
+            <span><i class="fas fa-clock"></i> 2:00 PM</span>
+          </div>
+        </div>
+        <a href="#" class="btn tournament-btn">Details</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Friends Activity Section -->
+  <section class="community">
+    <div class="section-header">
+      <h2>Friends Activity</h2>
+      <p>See what your friends are playing</p>
+    </div>
+    
+    <div style="max-width: 1400px; margin: 0 auto;">
+      <div style="background-color: var(--bg-card); border-radius: var(--border-radius-lg); padding: var(--spacing-lg); margin-bottom: var(--spacing-lg);">
+        <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+          <div style="width: 50px; height: 50px; border-radius: 50%; background-color: var(--primary-color); display: flex; align-items: center; justify-content: center; font-weight: bold;">JD</div>
+          <div>
+            <h3 style="margin-bottom: 0;">John Doe</h3>
+            <p style="margin: 0; color: var(--text-muted);">Playing Cyber Nexus</p>
+          </div>
+          <div style="margin-left: auto;">
+            <span style="background-color: var(--success-color); padding: 0.2rem 0.5rem; border-radius: var(--border-radius-sm); font-size: var(--font-xs);">Online</span>
+          </div>
+        </div>
+      </div>
+      
+      <div style="background-color: var(--bg-card); border-radius: var(--border-radius-lg); padding: var(--spacing-lg); margin-bottom: var(--spacing-lg);">
+        <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+          <div style="width: 50px; height: 50px; border-radius: 50%; background-color: var(--secondary-color); display: flex; align-items: center; justify-content: center; font-weight: bold;">AS</div>
+          <div>
+            <h3 style="margin-bottom: 0;">Alice Smith</h3>
+            <p style="margin: 0; color: var(--text-muted);">Playing Eternal Realms</p>
+          </div>
+          <div style="margin-left: auto;">
+            <span style="background-color: var(--success-color); padding: 0.2rem 0.5rem; border-radius: var(--border-radius-sm); font-size: var(--font-xs);">Online</span>
+          </div>
+        </div>
+      </div>
+      
+      <div style="background-color: var(--bg-card); border-radius: var(--border-radius-lg); padding: var(--spacing-lg);">
+        <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+          <div style="width: 50px; height: 50px; border-radius: 50%; background-color: var(--accent-color); display: flex; align-items: center; justify-content: center; font-weight: bold;">RJ</div>
+          <div>
+            <h3 style="margin-bottom: 0;">Robert Johnson</h3>
+            <p style="margin: 0; color: var(--text-muted);">Last seen 2 hours ago</p>
+          </div>
+          <div style="margin-left: auto;">
+            <span style="background-color: var(--text-muted); padding: 0.2rem 0.5rem; border-radius: var(--border-radius-sm); font-size: var(--font-xs);">Offline</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div id="footer-placeholder"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script src="includes.js"></script>
+  
+  <script>
+    /* Initialize particles.js */
+    particlesJS('particles-js', {
+      particles: {
+        number: {
+          value: 80,
+          density: {
+            enable: true,
+            value_area: 800
+          }
+        },
+        color: {
+          value: "#ffffff"
+        },
+        shape: {
+          type: "circle",
+          stroke: {
+            width: 0,
+            color: "#000000"
+          }
+        },
+        opacity: {
+          value: 0.5,
+          random: true,
+          anim: {
+            enable: true,
+            speed: 1,
+            opacity_min: 0.1,
+            sync: false
+          }
+        },
+        size: {
+          value: 3,
+          random: true,
+          anim: {
+            enable: true,
+            speed: 40,
+            size_min: 0.1,
+            sync: false
+          }
+        },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: "#ffffff",
+          opacity: 0.4,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 2,
+          direction: "none",
+          random: true,
+          straight: false,
+          out_mode: "out",
+          bounce: false,
+          attract: {
+            enable: false
+          }
+        }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: {
+            enable: true,
+            mode: "repulse"
+          },
+          onclick: {
+            enable: true,
+            mode: "push"
+          }
+        },
+        modes: {
+          repulse: {
+            distance: 100,
+            duration: 0.4
+          },
+          push: {
+            particles_nb: 4
+          }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
+</body>
+</html>

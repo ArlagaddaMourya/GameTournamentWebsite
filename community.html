@@ -6,6 +6,10 @@
   <title>GameHub Community</title>
   <link rel="stylesheet" href="community.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <!-- Preload header for improved performance -->
+  <link rel="preload" href="header.html" as="fetch" crossorigin>
+  <link rel="preload" href="footer.html" as="fetch" crossorigin>
 </head>
 <body>
   <div id="header-placeholder"></div>
@@ -419,62 +423,6 @@
 
   <div id="footer-placeholder"></div>
   
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Load header and footer
-      loadComponent('header-placeholder', '../components/header.html');
-      loadComponent('footer-placeholder', '../components/footer.html');
-      
-      // Forum view toggle
-      const viewControls = document.querySelectorAll('.view-control');
-      if (viewControls.length) {
-        viewControls.forEach(control => {
-          control.addEventListener('click', function() {
-            viewControls.forEach(c => c.classList.remove('active'));
-            this.classList.add('active');
-            // Add logic to change view here
-          });
-        });
-      }
-      
-      // Calendar toggle
-      const calendarBtns = document.querySelectorAll('.calendar-btn');
-      if (calendarBtns.length) {
-        calendarBtns.forEach(btn => {
-          btn.addEventListener('click', function() {
-            calendarBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            // Add logic to change calendar view here
-          });
-        });
-      }
-      
-      // Category filter
-      const categoryItems = document.querySelectorAll('.category-item');
-      if (categoryItems.length) {
-        categoryItems.forEach(item => {
-          item.addEventListener('click', function(e) {
-            e.preventDefault();
-            categoryItems.forEach(i => i.classList.remove('active'));
-            this.classList.add('active');
-            const category = this.querySelector('a').dataset.category;
-            // Add filtering logic here
-          });
-        });
-      }
-    });
-
-    function loadComponent(placeholderId, componentUrl) {
-      fetch(componentUrl)
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById(placeholderId).innerHTML = data;
-        })
-        .catch(error => {
-          console.error('Error loading component:', error);
-        });
-    }
-  </script>
   <script src="includes.js"></script>
 </body>
 </html>
