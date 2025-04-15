@@ -147,7 +147,7 @@ p {
 /* Hero Section */
 @font-face {
   font-family: 'Aquire';
-  src: url('../fonts/AquireBW.otf') format('truetype');
+  src: url('AquireBW.otf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
