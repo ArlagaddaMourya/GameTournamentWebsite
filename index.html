@@ -6,6 +6,7 @@
   <title>GamersHaven | HOME</title>
   <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="gamemodal.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Preload header for improved performance -->
@@ -157,7 +158,131 @@
       </div>
     </div>
   </section>
-
+<!-- Tournament Modal -->
+<div class="tournament-modal-backdrop">
+  <div class="tournament-modal">
+    <button class="tournament-modal-close">
+      <i class="fas fa-times"></i>
+    </button>
+    
+    <div class="tournament-modal-header">
+      <div class="tournament-modal-header-bg"></div>
+      <div class="tournament-header-content">
+        <span class="tournament-badge">Premium Tournament</span>
+        <h2 class="tournament-modal-title">Cyber Nexus Championship</h2>
+        <p class="tournament-modal-subtitle">Global competitive tournament with $50,000 prize pool</p>
+      </div>
+    </div>
+    
+    <div class="tournament-modal-body">
+      <!-- Tournament info grid -->
+      <div class="tournament-info-grid">
+        <div class="tournament-info-item" style="--item-index: 0">
+          <div class="tournament-info-icon"><i class="fas fa-calendar-alt"></i></div>
+          <div class="tournament-info-value">April 25, 2025</div>
+          <div class="tournament-info-label">Start Date</div>
+        </div>
+        <div class="tournament-info-item" style="--item-index: 1">
+          <div class="tournament-info-icon"><i class="fas fa-user-group"></i></div>
+          <div class="tournament-info-value">128</div>
+          <div class="tournament-info-label">Teams</div>
+        </div>
+        <div class="tournament-info-item" style="--item-index: 2">
+          <div class="tournament-info-icon"><i class="fas fa-trophy"></i></div>
+          <div class="tournament-info-value">$50,000</div>
+          <div class="tournament-info-label">Prize Pool</div>
+        </div>
+        <div class="tournament-info-item" style="--item-index: 3">
+          <div class="tournament-info-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="tournament-info-value">Online</div>
+          <div class="tournament-info-label">Location</div>
+        </div>
+      </div>
+      
+      <!-- Tournament description -->
+      <div class="tournament-description">
+        <h3>About the Tournament</h3>
+        <p>The Cyber Nexus Championship is the premier global competition for professional Cyber Nexus players. This tournament features the top 128 teams from around the world competing for glory and a massive $50,000 prize pool. Players will navigate through group stages and elimination brackets in an intense battle of skill and strategy.</p>
+        <p>Hosted completely online, this tournament allows teams from any region to participate and showcase their talents on the global stage.</p>
+      </div>
+      
+      <!-- Tournament timeline -->
+      <div class="tournament-timeline">
+        <h3>Tournament Schedule</h3>
+        <div class="timeline-container">
+          <div class="timeline-item" style="--item-index: 0">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">April 25, 2025</div>
+            <div class="timeline-title">Registration Deadline</div>
+            <div class="timeline-description">Last day to register your team for the tournament</div>
+          </div>
+          <div class="timeline-item" style="--item-index: 1">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">April 27-30, 2025</div>
+            <div class="timeline-title">Group Stage</div>
+            <div class="timeline-description">Teams compete in round-robin groups to advance</div>
+          </div>
+          <div class="timeline-item" style="--item-index: 2">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">May 2-3, 2025</div>
+            <div class="timeline-title">Quarterfinals & Semifinals</div>
+            <div class="timeline-description">Top teams battle in elimination brackets</div>
+          </div>
+          <div class="timeline-item" style="--item-index: 3">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">May 5, 2025</div>
+            <div class="timeline-title">Grand Finals</div>
+            <div class="timeline-description">The ultimate showdown for the championship title</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Tournament rules -->
+      <div class="tournament-rules">
+        <h3>Tournament Rules</h3>
+        <ul class="rules-list">
+          <li style="--item-index: 0">All participants must be at least 16 years of age</li>
+          <li style="--item-index: 1">Teams must consist of 5 main players and up to 2 substitutes</li>
+          <li style="--item-index: 2">All matches will be played on the latest tournament server</li>
+          <li style="--item-index: 3">Group stage: Best of 3 matches</li>
+          <li style="--item-index: 4">Playoffs: Best of 5 matches</li>
+          <li style="--item-index: 5">Grand Finals: Best of 7 matches</li>
+        </ul>
+      </div>
+      
+      <!-- Prize distribution -->
+      <div class="prizes-section">
+        <h3>Prize Distribution</h3>
+        <div class="prizes-grid">
+          <div class="prize-item" style="--item-index: 0">
+            <span class="prize-position">1st Place</span>
+            <div class="prize-amount">$25,000</div>
+            <div class="prize-extra">+ Championship Trophy</div>
+          </div>
+          <div class="prize-item" style="--item-index: 1">
+            <span class="prize-position">2nd Place</span>
+            <div class="prize-amount">$15,000</div>
+            <div class="prize-extra">+ Runner-up Medal</div>
+          </div>
+          <div class="prize-item" style="--item-index: 2">
+            <span class="prize-position">3rd Place</span>
+            <div class="prize-amount">$7,500</div>
+            <div class="prize-extra">+ Bronze Medal</div>
+          </div>
+          <div class="prize-item" style="--item-index: 3">
+            <span class="prize-position">4th Place</span>
+            <div class="prize-amount">$2,500</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Call to action -->
+      <div class="tournament-cta">
+        <button class="tournament-register-btn">Register Now</button>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- Community Section -->
   <section class="community">
     <div class="section-header">

@@ -273,3 +273,239 @@ function setupDemoLogin() {
     });
   }
 }
+// Game Card Modal Functionality
+document.addEventListener('DOMContentLoaded', function() {
+  // Game data - you can expand this with your actual game data
+  const gameData = {
+      'Cyber Nexus': {
+        category: 'Action',
+        rating: '4.8',
+        players: '24h', // Updated to match your new structure
+        image: '/api/placeholder/900/600', // Replace with actual image path
+        description: 'Enter the world of Cyber Nexus...',
+        features: ['Immersive Open World', 'Character Customization', '...']
+      },
+    
+    'Galactic Command': {
+      category: 'Strategy',
+      rating: '4.6',
+      players: '1.8K',
+      image: '../public/images/galantic commands.jpg', // Use your actual image path
+      description: 'Command your fleet across the galaxy in this epic space strategy game. Build alliances, manage resources, and engage in tactical battles to expand your cosmic empire and protect your territory from rival factions.',
+      features: ['Real-time Strategy', 'Fleet Customization', 'Resource Management', 'Diplomacy System', 'PvP Battles', 'Alliance Gameplay']
+    },
+    'Eternal Realms': {
+      category: 'RPG',
+      rating: '4.9',
+      players: '3.1K',
+      image: '../public/images/Eternalrelme.jpg', // Use your actual image path
+      description: 'Embark on an epic journey through magical lands filled with mystical creatures and ancient powers. Create your unique character, master various skills, and uncover the secrets of the Eternal Realms.',
+      features: ['Open World Exploration', 'Character Progression', 'Epic Quests', 'Crafting System', 'Guild Mechanics', 'PvE & PvP Content']
+    },
+    'Tactical Ops': {
+      category: 'Shooter',
+      rating: '4.7',
+      players: '2.9K',
+      image: '/api/placeholder/900/600', // Replace with actual image path
+      description: 'Join elite special forces in high-stakes tactical operations around the world. Master weapons, coordinate with your team, and complete objectives in this intense first-person shooter experience.',
+      features: ['Team-based Gameplay', 'Realistic Weapons', 'Multiple Game Modes', 'Seasonal Rankings', 'Custom Loadouts', 'Strategic Maps']
+    }
+  };
+
+  // Create modal container once
+  const modalContainer = document.createElement('div');
+  modalContainer.className = 'game-modal-container';
+  document.body.appendChild(modalContainer);
+  
+  // Close button
+  const closeButton = document.createElement('div');
+  closeButton.className = 'close-modal';
+  closeButton.innerHTML = '<i class="fas fa-times"></i>';
+  modalContainer.appendChild(closeButton);
+  
+  // Close modal function
+  function closeModal() {
+    const modal = document.querySelector('.game-modal');
+    if (modal) {
+      modal.classList.remove('active');
+      setTimeout(() => {
+        modalContainer.classList.remove('active');
+      }, 300);
+    }
+  }
+  
+  // Close on button click
+  closeButton.addEventListener('click', closeModal);
+  
+  // Close on ESC key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+  
+  // Close when clicking outside the modal
+  modalContainer.addEventListener('click', function(e) {
+    if (e.target === modalContainer) closeModal();
+  });
+  
+  // Add click event to all game cards
+  const gameCards = document.querySelectorAll('.game-card');
+  gameCards.forEach(card => {
+    card.addEventListener('click', function(e) {
+      // Prevent clicking on "Play Now" button from opening modal
+      if (e.target.classList.contains('play-now')) return;
+      
+      const gameTitle = card.querySelector('h3').textContent;
+      const game = gameData[gameTitle];
+      
+      if (!game) return;
+      
+      // Create modal content
+      const modalContent = `
+        <div class="game-modal">
+          <div class="game-modal-image">
+            <img src="${game.image}" alt="${gameTitle}">
+            <span class="game-category">${game.category}</span>
+          </div>
+          <div class="game-modal-content">
+            <h2>${gameTitle}</h2>
+            <div class="game-meta-expanded">
+              <span><i class="fas fa-star"></i> ${game.rating}</span>
+              <span><i class="fas fa-users"></i> ${game.players} Active</span>
+            </div>
+            <p class="game-description">${game.description}</p>
+            <div class="game-features">
+              <h3>Key Features</h3>
+              <div class="feature-list">
+                ${game.features.map(feature => `<span class="feature-item">${feature}</span>`).join('')}
+              </div>
+            </div>
+            <div class="game-modal-buttons">
+              <a href="#" class="play-now-expanded">Play Now</a>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      // Set modal content and show
+      modalContainer.innerHTML = '';
+      modalContainer.insertAdjacentHTML('beforeend', modalContent);
+      modalContainer.appendChild(closeButton);
+      
+      // Activate modal with slight delay for smooth transition
+      requestAnimationFrame(() => {
+        modalContainer.classList.add('active');
+        setTimeout(() => {
+          document.querySelector('.game-modal').classList.add('active');
+        }, 100);
+      });
+    });
+  });
+});
+
+// Tournament modal functionality
+document.addEventListener('DOMContentLoaded', function() {
+  // Get all tournament buttons/links
+  const tournamentButtons = document.querySelectorAll('.tournament-btn, .play-now');
+  const modalBackdrop = document.querySelector('.tournament-modal-backdrop');
+  const modalClose = document.querySelector('.tournament-modal-close');
+  const registerBtn = document.querySelector('.tournament-register-btn');
+  
+  // Open modal when clicking tournament buttons
+  tournamentButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      openTournamentModal();
+    });
+  });
+  
+  // Close modal functions
+  if (modalClose) {
+    modalClose.addEventListener('click', closeTournamentModal);
+  }
+  
+  if (modalBackdrop) {
+    modalBackdrop.addEventListener('click', function(e) {
+      if (e.target === modalBackdrop) {
+        closeTournamentModal();
+      }
+    });
+  }
+  
+  // Escape key to close modal
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modalBackdrop.classList.contains('active')) {
+      closeTournamentModal();
+    }
+  });
+  
+  // Register button functionality
+  if (registerBtn) {
+    registerBtn.addEventListener('click', function() {
+      window.location.href = 'register.html';
+    });
+  }
+  
+  function openTournamentModal() {
+    modalBackdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeTournamentModal() {
+    modalBackdrop.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
+
+// Tournament modal functionality
+document.addEventListener('DOMContentLoaded', function() {
+  // Get all tournament buttons/links
+  const tournamentButtons = document.querySelectorAll('.tournament-btn, .play-now');
+  const modalBackdrop = document.querySelector('.tournament-modal-backdrop');
+  const modalClose = document.querySelector('.tournament-modal-close');
+  const registerBtn = document.querySelector('.tournament-register-btn');
+  
+  // Open modal when clicking tournament buttons
+  tournamentButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      openTournamentModal();
+    });
+  });
+  
+  // Close modal functions
+  if (modalClose) {
+    modalClose.addEventListener('click', closeTournamentModal);
+  }
+  
+  if (modalBackdrop) {
+    modalBackdrop.addEventListener('click', function(e) {
+      if (e.target === modalBackdrop) {
+        closeTournamentModal();
+      }
+    });
+  }
+  
+  // Escape key to close modal
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modalBackdrop.classList.contains('active')) {
+      closeTournamentModal();
+    }
+  });
+  
+  // Register button functionality
+  if (registerBtn) {
+    registerBtn.addEventListener('click', function() {
+      window.location.href = 'register.html';
+    });
+  }
+  
+  function openTournamentModal() {
+    modalBackdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeTournamentModal() {
+    modalBackdrop.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
