@@ -1,0 +1,142 @@
+<!-- Enhanced Header Component --> 
+<header class="site-header">
+  <!-- Font imports -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../styles/header.css">
+  <link href='https://fonts.googleapis.com/css?family=Aquire' rel='stylesheet' type='text/css'>
+  
+  <div class="header-container">
+    <!-- Logo -->
+    <a href="home.html" class="logo">
+      <i class="fas fa-gamepad"></i>
+      <span class="logo-text">GamersHaven</span>
+    </a>
+    
+    <!-- Navigation -->
+    <nav class="main-nav">
+      <ul class="nav-links">
+        <li><a href="home.html" data-page="home">Home</a></li>
+        <li><a href="game.html" data-page="games">Games</a></li>
+        <li><a href="tournament.html" data-page="tournaments">Tournaments</a></li>
+        <li><a href="community.html" data-page="community">Community</a></li>
+        <li><a href="shop.html" data-page="shop">Shop</a></li>
+        <li><a href="blog.html" data-page="blog">Blog</a></li>
+      </ul>
+      
+      <!-- Mobile-only auth buttons & search (visible only in mobile menu) -->
+      <div class="mobile-auth">
+        <div class="search-container mobile-search">
+          <input type="text" placeholder="Search games...">
+          <i class="fas fa-search"></i>
+        </div>
+        <div class="auth-buttons mobile-buttons">
+          <a href="login.html" class="btn login-btn">Login</a>
+          <a href="register.html" class="btn register-btn">Sign Up</a>
+        </div>
+      </div>
+    </nav>
+    
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <!-- Search -->
+      <div class="search-container desktop-search">
+        <input type="text" placeholder="Search games...">
+        <i class="fas fa-search"></i>
+      </div>
+      
+      <!-- Auth Buttons -->
+      <div class="auth-buttons desktop-buttons">
+        <a href="login.html" class="btn login-btn">Login</a>
+        <a href="register.html" class="btn register-btn">Sign Up</a>
+      </div>
+      
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Set active nav link based on current page
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get current page filename
+    const currentPage = window.location.pathname.split('/').pop() || 'home.html';
+    const pageName = currentPage.split('.')[0];
+    
+    // Find matching nav link and add active class to parent li
+    const navLinks = document.querySelectorAll('.nav-links li a');
+    navLinks.forEach(link => {
+      const linkPage = link.getAttribute('data-page');
+      if (linkPage === pageName || (pageName === 'home' && linkPage === 'home')) {
+        link.parentElement.classList.add('active');
+      }
+    });
+    
+    // Add initial class if page is already scrolled
+    if (window.scrollY > 10) {
+      document.querySelector('.site-header').classList.add('scrolled');
+    }
+  });
+
+  // Add scrolled class to header on scroll with throttling
+  let lastScrollTop = 0;
+  let ticking = false;
+  
+  window.addEventListener('scroll', function() {
+    const scrollTop = window.scrollY;
+    
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        const header = document.querySelector('.site-header');
+        
+        if (scrollTop > 10) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+        
+        lastScrollTop = scrollTop;
+        ticking = false;
+      });
+      
+      ticking = true;
+    }
+  });
+
+  // Mobile menu toggle with animation
+  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+  if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', function() {
+      const nav = document.querySelector('.main-nav');
+      const icon = document.querySelector('.mobile-menu-toggle i');
+      
+      nav.classList.toggle('active');
+      
+      // Animate the icon
+      if (nav.classList.contains('active')) {
+        icon.classList.replace('fa-bars', 'fa-times');
+        icon.style.transform = 'rotate(90deg)';
+      } else {
+        icon.classList.replace('fa-times', 'fa-bars');
+        icon.style.transform = 'rotate(0deg)';
+      }
+    });
+  }
+  
+  // Close mobile menu when clicking outside
+  document.addEventListener('click', function(event) {
+    const nav = document.querySelector('.main-nav');
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    
+    if (nav.classList.contains('active') && 
+        !nav.contains(event.target) && 
+        !toggle.contains(event.target)) {
+      nav.classList.remove('active');
+      document.querySelector('.mobile-menu-toggle i').classList.replace('fa-times', 'fa-bars');
+      document.querySelector('.mobile-menu-toggle i').style.transform = 'rotate(0deg)';
+    }
+  });
+</script>

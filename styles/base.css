@@ -1,0 +1,322 @@
+/* base.css - Foundation styles for the gaming website */
+
+:root {
+    /* Color palette */
+    --primary: #7e22ce;         /* Purple */
+    --primary-dark: #581c87;    /* Dark Purple */
+    --secondary: #2563eb;       /* Blue */
+    --secondary-dark: #1d4ed8;  /* Dark Blue */
+    --accent: #10b981;          /* Green */
+    --accent-dark: #059669;     /* Dark Green */
+    --neon-glow: #2dd4bf;       /* Teal for glow effects */
+    --dark: #0f172a;            /* Navy Dark */
+    --darker: #020617;          /* Near Black */
+    --light: #f8fafc;           /* Off-White */
+    --light-gray: #cbd5e1;      /* Light Gray */
+    --error: #ef4444;           /* Red */
+    --success: #22c55e;         /* Green */
+  
+    /* Fonts */
+    /* --font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-heading: 'Rajdhani', 'Orbitron', var(--font-primary);
+    --font-mono: 'Consolas', 'Monaco', 'Andale Mono', monospace; */
+  }
+  
+  /* Reset and base styles */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--darker);
+    color: var(--light);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-size: 16px;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+  }
+  
+  ul, ol {
+    list-style: none;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  input, 
+  button, 
+  textarea, 
+  select {
+    font-family: inherit;
+    font-size: inherit;
+  }
+  
+  button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    outline: none;
+  }
+  
+  /* Common utility classes */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .section {
+    padding: 4rem 1rem;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  /* Button styles */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    gap: 0.5rem;
+  }
+  
+  .primary-btn {
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    color: var(--light);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  }
+  
+  .primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+  }
+  
+  .primary-btn:active {
+    transform: translateY(-1px);
+  }
+  
+  .secondary-btn {
+    background: rgba(15, 23, 42, 0.6);
+    color: var(--light);
+    border: 1px solid var(--secondary);
+    backdrop-filter: blur(10px);
+  }
+  
+  .secondary-btn:hover {
+    background: rgba(29, 78, 216, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+  }
+  
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+  }
+  
+  h4 {
+    font-size: 1.25rem;
+  }
+  
+  p {
+    margin-bottom: 1rem;
+  }
+  
+  /* Form styling */
+  input, textarea, select {
+    padding: 0.75rem 1rem;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(203, 213, 225, 0.2);
+    border-radius: 8px;
+    color: var(--light);
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+  
+  input:focus, 
+  textarea:focus, 
+  select:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+  }
+  
+  input::placeholder,
+  textarea::placeholder {
+    color: rgba(248, 250, 252, 0.6);
+  }
+  
+  /* Grid layouts */
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .flex-col {
+    flex-direction: column;
+  }
+  
+  .flex-center {
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .flex-between {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Icons */
+  .icon {
+    height: 1.5rem;
+    width: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Section styles */
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .section-header h2 {
+    font-size: 2.25rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .section-header h2:after {
+    content: '';
+    position: absolute;
+    left: 25%;
+    bottom: -10px;
+    width: 50%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 2px;
+  }
+  
+  .section-header p {
+    color: var(--light-gray);
+    font-size: 1.1rem;
+  }
+  
+  /* Media queries */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2rem;
+    }
+    
+    h2 {
+      font-size: 1.75rem;
+    }
+    
+    .section {
+      padding: 3rem 1rem;
+    }
+    
+    .section-header h2 {
+      font-size: 1.75rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.75rem;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+    }
+    
+    .btn {
+      padding: 0.6rem 1.25rem;
+    }
+    
+    .section {
+      padding: 2rem 1rem;
+    }
+  }
+  #snow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+  }
+  
+  .snowflake {
+    position: absolute;
+    top: -10px;
+    color: white;
+    font-size: 1em;
+    opacity: 0.8;
+    user-select: none;
+    animation: fall linear infinite;
+  }
+  
+  @keyframes fall {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 2;
+    }
+    100% {
+      transform: translateY(100vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+  
