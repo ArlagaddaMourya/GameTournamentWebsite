@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | GamersHaven</title>
-  <link rel="stylesheet" href="base.css">
-  <link rel="stylesheet" href="login.css">
+  <title>Register | GamersHaven</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/register.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  
-  <!-- Particle background -->
+
+
+  <!-- Particle background from login page -->
   <div class="particles-container" id="particles-js"></div>
   
   <div class="auth-page">
@@ -19,12 +20,17 @@
         <i class="fas fa-gamepad logo-icon"></i>
       </div>
       
-      <h1 class="animated-title">WELCOME BACK</h1>
+      <h1 class="animated-title">CREATE ACCOUNT</h1>
       
-      <form class="login-form">
+      <form class="register-form">
         <div class="input-group">
           <i class="fas fa-user icon"></i>
-          <input type="text" placeholder="Username or Email" required>
+          <input type="text" placeholder="Username" required>
+        </div>
+        
+        <div class="input-group">
+          <i class="fas fa-envelope icon"></i>
+          <input type="email" placeholder="Email Address" required>
         </div>
         
         <div class="input-group">
@@ -33,21 +39,19 @@
           <i class="fas fa-eye toggle-password"></i>
         </div>
         
-        <div class="remember-forgot">
-          <label class="remember-me">
-            <input type="checkbox">
-            <span class="checkbox-text">Remember me</span>
-          </label>
-          <a href="#" class="forgot-password">Forgot Password?</a>
+        <div class="input-group">
+          <i class="fas fa-lock icon"></i>
+          <input type="password" placeholder="Confirm Password" required>
+          <i class="fas fa-eye toggle-password"></i>
         </div>
         
         <button class="form-btn glow-btn" type="submit">
-          <span>LOGIN</span>
-          <i class="fas fa-sign-in-alt"></i>
+          <span>REGISTER</span>
+          <i class="fas fa-user-plus"></i>
         </button>
         
         <div class="social-login">
-          <p>Or login with</p>
+          <p>Or sign up with</p>
           <div class="social-icons">
             <button type="button" class="social-btn google"><i class="fab fa-google"></i></button>
             <button type="button" class="social-btn discord"><i class="fab fa-discord"></i></button>
@@ -56,16 +60,16 @@
         </div>
         
         <div class="form-link">
-          New player? <a href="register.html">Create Account</a>
+          Already have an account? <a href="pages/login.html">Login</a>
         </div>
       </form>
     </div>
   </div>
 
+  <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-  <script src="/scripts/includes.js"></script>
   <script>
-    // Initialize particles.js
+    // Initialize particles.js (same as login page)
     particlesJS('particles-js', {
       particles: {
         number: { value: 40, density: { enable: true, value_area: 800 } },
@@ -77,17 +81,17 @@
         move: { enable: true, speed: 2, direction: "none", random: true, out_mode: "out" }
       }
     });
-
+    
     // Toggle password visibility
-    document.querySelector('.toggle-password').addEventListener('click', function() {
-      const passwordInput = this.previousElementSibling;
-      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-      passwordInput.setAttribute('type', type);
-      this.classList.toggle('fa-eye');
-      this.classList.toggle('fa-eye-slash');
+    document.querySelectorAll('.toggle-password').forEach(function(toggle) {
+      toggle.addEventListener('click', function() {
+        const passwordInput = this.previousElementSibling;
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
     });
   </script>
-  <script src="scripts/includes.js"></script>
-
 </body>
 </html>

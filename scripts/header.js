@@ -41,9 +41,9 @@ function updateAuthUI(isLoggedIn, user) {
                 </div>
                 <div class="profile-menu">
                     <ul>
-                        <li><a href="profile.html"><i class="fas fa-user"></i> My Profile</a></li>
-                        <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                        <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                        <li><a href="pages/profile.html"><i class="fas fa-user"></i> My Profile</a></li>
+                        <li><a href="pages/dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="pages/settings.html"><i class="fas fa-cog"></i> Settings</a></li>
                         <li class="logout"><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                     </ul>
                 </div>
@@ -51,7 +51,7 @@ function updateAuthUI(isLoggedIn, user) {
             
             // Mobile profile buttons
             mobileAuthButtons.innerHTML = `
-                <a href="profile.html" class="btn login-btn"><i class="fas fa-user"></i> My Profile</a>
+                <a href="pages/profile.html" class="btn login-btn"><i class="fas fa-user"></i> My Profile</a>
                 <a href="#" id="mobile-logout-btn" class="btn register-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
             `;
             
@@ -83,13 +83,13 @@ function updateAuthUI(isLoggedIn, user) {
     } else {
         // Not logged in - show login/register buttons
         desktopAuthButtons.innerHTML = `
-            <a href="login.html" class="btn login-btn">Login</a>
-            <a href="register.html" class="btn register-btn">Sign Up</a>
+            <a href="pages/login.html" class="btn login-btn">Login</a>
+            <a href="pages/register.html" class="btn register-btn">Sign Up</a>
         `;
         
         mobileAuthButtons.innerHTML = `
-            <a href="login.html" class="btn login-btn">Login</a>
-            <a href="register.html" class="btn register-btn">Sign Up</a>
+            <a href="pages/login.html" class="btn login-btn">Login</a>
+            <a href="pages/register.html" class="btn register-btn">Sign Up</a>
         `;
     }
 }

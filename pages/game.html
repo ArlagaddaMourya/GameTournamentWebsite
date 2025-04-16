@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GamersHaven | Games</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="game.css">
-    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="/styles/game.css">
+    <link rel="stylesheet" href="/styles/header.css">
     </head>
     <body>
 
@@ -89,7 +89,7 @@
           document.body.classList.add('loading');
           
           // Fetch and inject the header
-          fetch('header.html')
+          fetch('/pages/header.html')
             .then(response => response.text())
             .then(html => {
               document.getElementById('header-container').innerHTML = html;
@@ -106,7 +106,7 @@
         });    document.addEventListener('DOMContentLoaded', function() {
             const footerContainer = document.getElementById('footer-container');
             if (footerContainer) {
-              fetch('footer.html')
+              fetch('/pages/footer.html')
                 .then(response => response.text())
                 .then(html => {
                   footerContainer.innerHTML = html;
@@ -124,6 +124,6 @@
             }
           });
       </script>
-      <script src="header.js"></script>
+      <script src="/scripts/header.js"></script>
     </body>
     </html>
