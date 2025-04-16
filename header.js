@@ -172,3 +172,329 @@ function setupMobileMenu() {
         }
     });
 }
+
+/**
+ * Footer functionality for GamersHaven
+ * Handles newsletter subscription, social links, and dynamic footer features
+ */
+
+// Footer Module using IIFE pattern
+const FooterModule = (function() {
+    // Private variables
+    let isFooterLoaded = false;
+    const currentYear = new Date().getFullYear();
+    
+    // Initialize the footer
+    function initFooter() {
+      // Update copyright year
+      updateCopyrightYear();
+      
+      // Setup newsletter form
+      setupNewsletterForm();
+      
+      // Setup quick links highlighting
+      highlightCurrentPageLink();
+      
+      // Setup social media interaction tracking
+      setupSocialTracking();
+      
+      // Set footer as loaded
+      isFooterLoaded = true;
+      
+      // Add scroll-to-top functionality
+      addScrollToTop();
+      
+      console.log('Footer initialized successfully');
+    }
+    
+    // Update the copyright year in footer
+    function updateCopyrightYear() {
+      const copyrightElement = document.querySelector('.footer-bottom p');
+      if (copyrightElement) {
+        copyrightElement.innerHTML = copyrightElement.innerHTML.replace(/\d{4}/, currentYear);
+      }
+    }
+    
+    // Setup newsletter subscription form
+    function setupNewsletterForm() {
+      const newsletterForm = document.querySelector('.newsletter-form');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          const emailInput = this.querySelector('input[type="email"]');
+          const email = emailInput.value.trim();
+          
+          if (!email) {
+            showNewsletterMessage('Please enter your email address', 'error');
+            return;
+          }
+          
+          if (!isValidEmail(email)) {
+            showNewsletterMessage('Please enter a valid email address', 'error');
+            return;
+          }
+          
+          // Here you would typically send the email to your backend
+          // For now, we'll simulate success
+          subscribeToNewsletter(email);
+        });
+      }
+    }
+    
+    // Validate email format
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+    
+    // Subscribe to newsletter
+    function subscribeToNewsletter(email) {
+      // Show loading state
+      const button = document.querySelector('.newsletter-form button');
+      const originalContent = button.innerHTML;
+      button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+      button.disabled = true;
+      
+      // Simulate API call
+      setTimeout(() => {
+        // Reset button
+        button.innerHTML = originalContent;
+        button.disabled = false;
+        
+        // Clear input
+        document.querySelector('.newsletter-form input').value = '';
+        
+        // Show success message
+        showNewsletterMessage('Thank you for subscribing!', 'success');
+        
+        // Store subscription in local storage to remember user
+        localStorage.setItem('gameHavenNewsletter', email);
+      }, 1000);
+    }
+    
+    // Show newsletter message
+    function showNewsletterMessage(message, type) {
+      // Remove any existing message
+      const existingMessage = document.querySelector('.newsletter-message');
+      if (existingMessage) {
+        existingMessage.remove();
+      }
+      
+      // Create new message
+      const messageElement = document.createElement('div');
+      messageElement.className = `newsletter-message ${type}`;
+      messageElement.textContent = message;
+      
+      // Insert after the form
+      const newsletterForm = document.querySelector('.newsletter-form');
+      newsletterForm.insertAdjacentElement('afterend', messageElement);
+      
+      // Remove after 3 seconds
+      setTimeout(() => {
+        messageElement.classList.add('fade-out');
+        setTimeout(() => {
+          messageElement.remove();
+        }, 300);
+      }, 3000);
+    }
+    
+    // Highlight the current page in quick links
+    function highlightCurrentPageLink() {
+      // Get current page filename
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      const pageName = currentPage.split('.')[0];
+      
+      // Find and highlight the matching link in footer
+      const quickLinks = document.querySelectorAll('.footer-column ul li a');
+      quickLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        
+        if (href === '#') {
+          // For placeholder links, try to match by text content
+          const linkText = link.textContent.toLowerCase();
+          if (pageName === linkText || 
+              (pageName === 'index' && linkText === 'home')) {
+            link.classList.add('active-link');
+          }
+        } else if (href.includes(pageName) || 
+                  (pageName === '' && href.includes('index'))) {
+          link.classList.add('active-link');
+        }
+      });
+    }
+    
+    // Track social media interactions
+    function setupSocialTracking() {
+      // This would typically use actual social links, but we'll adapt to the existing structure
+      const quickLinks = document.querySelectorAll('.footer-column ul li a');
+      
+      quickLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          // If this is a social media link or similar important link
+          const linkText = this.textContent.trim().toLowerCase();
+          const socialPlatforms = ['facebook', 'twitter', 'instagram', 'discord', 'youtube'];
+          
+          // Check if this is a likely social link
+          const isSocialLink = socialPlatforms.some(platform => linkText.includes(platform));
+          
+          if (isSocialLink) {
+            // Track click with analytics if available
+            if (window.gtag) {
+              gtag('event', 'social_click', {
+                'event_category': 'footer',
+                'event_label': linkText
+              });
+            }
+            
+            console.log(`Social link clicked: ${linkText}`);
+          }
+        });
+      });
+    }
+    
+    // Add scroll to top functionality
+    function addScrollToTop() {
+      // Create scroll to top button if doesn't exist
+      if (!document.querySelector('.scroll-to-top')) {
+        const scrollButton = document.createElement('button');
+        scrollButton.className = 'scroll-to-top';
+        scrollButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
+        document.body.appendChild(scrollButton);
+        
+        // Style the button using inline styles (could be moved to CSS)
+        scrollButton.style.position = 'fixed';
+        scrollButton.style.bottom = '20px';
+        scrollButton.style.right = '20px';
+        scrollButton.style.zIndex = '99';
+        scrollButton.style.display = 'none';
+        scrollButton.style.width = '40px';
+        scrollButton.style.height = '40px';
+        scrollButton.style.borderRadius = '50%';
+        scrollButton.style.backgroundColor = '#7e57c2';
+        scrollButton.style.color = 'white';
+        scrollButton.style.border = 'none';
+        scrollButton.style.cursor = 'pointer';
+        scrollButton.style.opacity = '0.7';
+        scrollButton.style.transition = 'opacity 0.3s';
+        
+        // Show/hide based on scroll position
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 500) {
+            scrollButton.style.display = 'block';
+          } else {
+            scrollButton.style.display = 'none';
+          }
+        }, { passive: true });
+        
+        // Add hover effect
+        scrollButton.addEventListener('mouseenter', function() {
+          this.style.opacity = '1';
+        });
+        
+        scrollButton.addEventListener('mouseleave', function() {
+          this.style.opacity = '0.7';
+        });
+        
+        // Scroll to top when clicked
+        scrollButton.addEventListener('click', function() {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+      }
+    }
+    
+    // Check if footer needs theme updates based on user preferences
+    function checkFooterTheme() {
+      // Check if user has dark mode preference stored
+      const darkModePreference = localStorage.getItem('gameHavenDarkMode');
+      
+      if (darkModePreference === 'true') {
+        // Add dark mode class if not already present
+        if (!document.body.classList.contains('dark-mode')) {
+          document.body.classList.add('dark-mode');
+        }
+      }
+    }
+    
+    // Public API
+    return {
+      init: function() {
+        // Initialize footer when DOM is ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initFooter);
+        } else {
+          initFooter();
+        }
+      },
+      
+      // Update copyright year manually if needed
+      updateCopyright: function() {
+        updateCopyrightYear();
+      },
+      
+      // Check and apply user preferences
+      applyUserPreferences: function() {
+        checkFooterTheme();
+      },
+      
+      // Subscribe to newsletter programmatically
+      subscribe: function(email) {
+        if (isValidEmail(email)) {
+          subscribeToNewsletter(email);
+          return true;
+        }
+        return false;
+      },
+      
+      // Check if footer is initialized
+      isInitialized: function() {
+        return isFooterLoaded;
+      }
+    };
+  })();
+  
+  // Initialize the footer
+  FooterModule.init();
+  
+  // Apply any user preferences
+  FooterModule.applyUserPreferences();
+  
+  // CSS for newsletter messages
+  const newsletterCss = `
+  .newsletter-message {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-sm);
+    transition: opacity 0.3s ease;
+  }
+  
+  .newsletter-message.success {
+    background-color: rgba(76, 175, 80, 0.2);
+    color: #81c784;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+  }
+  
+  .newsletter-message.error {
+    background-color: rgba(244, 67, 54, 0.2);
+    color: #e57373;
+    border: 1px solid rgba(244, 67, 54, 0.3);
+  }
+  
+  .newsletter-message.fade-out {
+    opacity: 0;
+  }
+  
+  .active-link {
+    color: var(--primary-light) !important;
+    font-weight: 500;
+  }
+  `;
+  
+  // Add the CSS to the page
+  const styleElement = document.createElement('style');
+  styleElement.textContent = newsletterCss;
+  document.head.appendChild(styleElement);
