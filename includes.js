@@ -22,78 +22,7 @@ function checkLoginStatus() {
   return userIsLoggedIn;
 }
 
-// Update auth UI based on login status
-function updateAuthUI() {
-  const desktopAuthButtons = document.querySelector('.desktop-buttons');
-  const mobileAuthButtons = document.querySelector('.mobile-buttons');
-  
-  if (!desktopAuthButtons || !mobileAuthButtons) return;
-  
-  if (userIsLoggedIn && currentUser) {
-    // Desktop profile button
-    desktopAuthButtons.innerHTML = `
-      <div class="profile-btn">
-        <img src="${currentUser.avatar}" alt="Profile">
-        <span>${currentUser.username}</span>
-        <i class="fas fa-chevron-down"></i>
-      </div>
-      <div class="profile-menu">
-        <ul>
-          <li><a href="profile.html"><i class="fas fa-user"></i> My Profile</a></li>
-          <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-          <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
-          <li class="logout"><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-        </ul>
-      </div>
-    `;
-    
-    // Mobile profile buttons
-    mobileAuthButtons.innerHTML = `
-      <a href="profile.html" class="btn login-btn"><i class="fas fa-user"></i> My Profile</a>
-      <a href="#" id="mobile-logout-btn" class="btn register-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    `;
-    
-    // Add event listeners for logout
-    document.getElementById('logout-btn')?.addEventListener('click', handleLogout);
-    document.getElementById('mobile-logout-btn')?.addEventListener('click', handleLogout);
-    
-    // Profile dropdown toggle
-    const profileBtn = document.querySelector('.profile-btn');
-    if (profileBtn) {
-      profileBtn.addEventListener('click', function() {
-        this.classList.toggle('active');
-      });
-      
-      // Close dropdown when clicking outside
-      document.addEventListener('click', function(event) {
-        if (!profileBtn.contains(event.target)) {
-          profileBtn.classList.remove('active');
-        }
-      });
-    }
-  } else {
-    // Not logged in - show login/register buttons
-    desktopAuthButtons.innerHTML = `
-      <a href="login.html" class="btn login-btn">Login</a>
-      <a href="register.html" class="btn register-btn">Sign Up</a>
-    `;
-    
-    mobileAuthButtons.innerHTML = `
-      <a href="login.html" class="btn login-btn">Login</a>
-      <a href="register.html" class="btn register-btn">Sign Up</a>
-    `;
-  }
-}
 
-// Handle logout action
-function handleLogout(e) {
-  e.preventDefault();
-  localStorage.removeItem('gameHavenLoggedIn');
-  localStorage.removeItem('gameHavenUser');
-  userIsLoggedIn = false;
-  currentUser = null;
-  updateAuthUI();
-}
 
 // Load header with enhanced error handling and caching
 function loadHeader() {
@@ -150,23 +79,7 @@ function loadFooter() {
     });
 }
 
-// Set active navigation link based on current page
-function setActiveNavLink() {
-  // Get current page filename
-  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-  const pageName = currentPage.split('.')[0];
-  
-  // Find matching nav link and add active class to parent li
-  const navLinks = document.querySelectorAll('.nav-links li a');
-  navLinks.forEach(link => {
-    const linkPage = link.getAttribute('data-page');
-    if (linkPage === pageName) {
-      link.parentElement.classList.add('active');
-    } else {
-      link.parentElement.classList.remove('active');
-    }
-  });
-}
+
 
 // Setup header scroll behavior with performance optimizations
 function setupHeaderScroll() {
@@ -198,36 +111,6 @@ function setupHeaderScroll() {
       ticking = true;
     }
   }, { passive: true }); // Use passive event listener for performance
-}
-
-// Setup mobile menu with optimized event handling
-function setupMobileMenu() {
-  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-  const nav = document.querySelector('.main-nav');
-  const icon = document.querySelector('.mobile-menu-toggle i');
-  
-  if (!mobileMenuToggle || !nav || !icon) return;
-  
-  mobileMenuToggle.addEventListener('click', function() {
-    nav.classList.toggle('active');
-    
-    // Toggle icon
-    if (nav.classList.contains('active')) {
-      icon.classList.replace('fa-bars', 'fa-times');
-    } else {
-      icon.classList.replace('fa-times', 'fa-bars');
-    }
-  });
-  
-  // Close mobile menu when clicking outside
-  document.addEventListener('click', function(event) {
-    if (nav.classList.contains('active') && 
-        !nav.contains(event.target) && 
-        !mobileMenuToggle.contains(event.target)) {
-      nav.classList.remove('active');
-      icon.classList.replace('fa-times', 'fa-bars');
-    }
-  });
 }
 
 // Initialize when DOM is fully loaded

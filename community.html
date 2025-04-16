@@ -12,7 +12,9 @@
   <link rel="preload" href="footer.html" as="fetch" crossorigin>
 </head>
 <body>
-  <div id="header-placeholder"></div>
+  
+  <div id="header-container"></div>
+
   
   <!-- Hero Section -->
   <section class="hero">
@@ -422,7 +424,31 @@
   </section>
 
   <div id="footer-placeholder"></div>
-  
-  <script src="includes.js"></script>
+
+<script>
+  // Load the header when the page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add loading class to body during initial render
+    document.body.classList.add('loading');
+    
+    // Fetch and inject the header
+    fetch('header.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('header-container').innerHTML = html;
+        // Initialize the header functionality
+        initHeader();
+        // Remove loading class after a short delay to ensure smooth transition
+        setTimeout(() => document.body.classList.remove('loading'), 200);
+      })
+      .catch(error => {
+        console.error('Error loading header:', error);
+        document.getElementById('header-container').innerHTML = '<p>Error loading header content.</p>';
+        document.body.classList.remove('loading');
+      });
+  });
+</script>
+<script src="header.js"></script>
+
 </body>
 </html>

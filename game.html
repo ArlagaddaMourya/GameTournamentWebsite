@@ -4,16 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GamersHaven | Games</title>
-    <link rel="stylesheet" href="game.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Preload header for improved performance -->
-    <link rel="preload" href="header.html" as="fetch" crossorigin>
-    <link rel="preload" href="footer.html" as="fetch" crossorigin>
+    <link rel="stylesheet" href="game.css">
+    <link rel="stylesheet" href="header.css">
     </head>
     <body>
-        <div id="header-placeholder"></div>
-    <!-- Featured Games Section -->
+
+    <!-- Header with Navigation -->
+    <div id="header-container"></div>
+
     <section id="featured" class="featured-games">
         <div class="section-header">
         <h2>Featured Games</h2>
@@ -83,6 +82,29 @@
         </div>
     </section>
     <div id="footer-placeholder"></div>
-    <script src="includes.js"></script>
+    <script>
+        // Load the header when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+          // Add loading class to body during initial render
+          document.body.classList.add('loading');
+          
+          // Fetch and inject the header
+          fetch('header.html')
+            .then(response => response.text())
+            .then(html => {
+              document.getElementById('header-container').innerHTML = html;
+              // Initialize the header functionality
+              initHeader();
+              // Remove loading class after a short delay to ensure smooth transition
+              setTimeout(() => document.body.classList.remove('loading'), 200);
+            })
+            .catch(error => {
+              console.error('Error loading header:', error);
+              document.getElementById('header-container').innerHTML = '<p>Error loading header content.</p>';
+              document.body.classList.remove('loading');
+            });
+        });
+      </script>
+      <script src="header.js"></script>
     </body>
     </html>

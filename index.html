@@ -4,18 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GamersHaven | HOME</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="gamemodal.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Preload header for improved performance -->
-  <link rel="preload" href="header.html" as="fetch" crossorigin>
-  <link rel="preload" href="footer.html" as="fetch" crossorigin>
 </head>
 <body>
   <!-- Header with Navigation -->
-  <div id="header-placeholder"></div>
+  <div id="header-container"></div>
 
 
   <!-- Hero Section -->
@@ -333,98 +332,32 @@
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-  <script src="includes.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@3"></script>
-  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <script src="particles.js"></script>
+  <script>  
+    // Load the header when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add loading class to body during initial render
+      document.body.classList.add('loading');
+      
+      // Fetch and inject the header
+      fetch('header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('header-container').innerHTML = html;
+          // Initialize the header functionality
+          initHeader();
+          // Remove loading class after a short delay to ensure smooth transition
+          setTimeout(() => document.body.classList.remove('loading'), 200);
+        })
+        .catch(error => {
+          console.error('Error loading header:', error);
+          document.getElementById('header-container').innerHTML = '<p>Error loading header content.</p>';
+          document.body.classList.remove('loading');
+        });
+    });
+  </script>
+  <script src="header.js"></script>
 
-<script>
-  /* Initialize particles.js */
-particlesJS('particles-js', {
-  particles: {
-    number: {
-      value: 80,
-      density: {
-        enable: true,
-        value_area: 800
-      }
-    },
-    color: {
-      value: "#ffffff"
-    },
-    shape: {
-      type: "circle",
-      stroke: {
-        width: 0,
-        color: "#000000"
-      }
-    },
-    opacity: {
-      value: 0.5,
-      random: true,
-      anim: {
-        enable: true,
-        speed: 1,
-        opacity_min: 0.1,
-        sync: false
-      }
-    },
-    size: {
-      value: 3,
-      random: true,
-      anim: {
-        enable: true,
-        speed: 40,
-        size_min: 0.1,
-        sync: false
-      }
-    },
-    line_linked: {
-      enable: true,
-      distance: 150,
-      color: "#ffffff",
-      opacity: 0.4,
-      width: 1
-    },
-    move: {
-      enable: true,
-      speed: 2,
-      direction: "none",
-      random: true,
-      straight: false,
-      out_mode: "out",
-      bounce: false,
-      attract: {
-        enable: false
-      }
-    }
-  },
-  interactivity: {
-    detect_on: "canvas",
-    events: {
-      onhover: {
-        enable: true,
-        mode: "repulse"
-      },
-      onclick: {
-        enable: true,
-        mode: "push"
-      }
-    },
-    modes: {
-      repulse: {
-        distance: 100,
-        duration: 0.4
-      },
-      push: {
-        particles_nb: 4
-      }
-    }
-  },
-  retina_detect: true
-});
-
-  
-</script>
 
 
 </body>

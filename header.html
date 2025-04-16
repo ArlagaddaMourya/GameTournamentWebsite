@@ -8,31 +8,57 @@
     <!-- Font imports - Load directly in the head -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Preload important CSS -->
-    <link rel="preload" href="header.css" as="style">
-    
+
     <!-- Stylesheets -->
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="base.css">
-    <!-- Add your page-specific CSS here -->
-    
+
     <!-- Critical inline CSS to prevent layout shifts -->
     <style>
-        body {
-            padding-top: 80px; /* Account for fixed header */
-            margin: 0;
+        /* Skeleton styles */
+        .skeleton-item {
+            height: 16px;
+            width: 80px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            margin: 0 10px;
+            display: none; /* Hide when content is loaded */
+        }
+    
+        .logo-skeleton, .search-skeleton, .auth-skeleton {
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            height: 30px;
+            position: absolute;
+            display: none; /* Hide when content is loaded */
+        }
+    
+        .logo-skeleton {
+            width: 160px;
+        }
+    
+        .search-skeleton {
+            width: 200px;
+        }
+    
+        .auth-skeleton {
+            width: 180px;
         }
         
-        /* Minimal header styling for immediate rendering */
-        .site-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 80px;
-            z-index: 1000;
-            background-color: rgba(10, 10, 20, 0.95);
+        /* Show skeletons only during initial load */
+        .loading .skeleton-item,
+        .loading .logo-skeleton,
+        .loading .search-skeleton,
+        .loading .auth-skeleton {
+            display: block;
+        }
+        
+        .loading .nav-links > li > a,
+        .loading .logo > i,
+        .loading .logo > span,
+        .loading .search-container > input,
+        .loading .search-container > i {
+            opacity: 0;
         }
     </style>
 </head>
@@ -40,15 +66,22 @@
     <!-- Inline header - No JavaScript loading required -->
     <header class="site-header">
         <div class="header-container">
-            <!-- Logo -->
+            <!-- Logo with skeleton fallback -->
             <a href="index.html" class="logo">
+                <div class="logo-skeleton"></div>
                 <i class="fas fa-gamepad"></i>
                 <span class="logo-text">GamersHaven</span>
             </a>
             
-            <!-- Navigation -->
+            <!-- Navigation with skeleton -->
             <nav class="main-nav">
                 <ul class="nav-links">
+                    <li class="skeleton-item"></li>
+                    <li class="skeleton-item"></li>
+                    <li class="skeleton-item"></li>
+                    <li class="skeleton-item"></li>
+                    <li class="skeleton-item"></li>
+                    <li class="skeleton-item"></li>
                     <li><a href="index.html" data-page="index">Home</a></li>
                     <li><a href="game.html" data-page="game">Games</a></li>
                     <li><a href="tournament.html" data-page="tournament">Tournaments</a></li>
@@ -60,10 +93,12 @@
                 <!-- Mobile-only auth buttons & search -->
                 <div class="mobile-auth">
                     <div class="search-container mobile-search">
+                        <div class="search-skeleton"></div>
                         <input type="text" placeholder="Search games...">
                         <i class="fas fa-search"></i>
                     </div>
                     <div class="auth-buttons mobile-buttons" id="mobile-auth-buttons">
+                        <div class="auth-skeleton"></div>
                         <!-- Will be populated by JavaScript -->
                     </div>
                 </div>
@@ -73,12 +108,14 @@
             <div class="header-actions">
                 <!-- Search -->
                 <div class="search-container desktop-search">
+                    <div class="search-skeleton"></div>
                     <input type="text" placeholder="Search games...">
                     <i class="fas fa-search"></i>
                 </div>
                 
                 <!-- Auth Buttons -->
                 <div class="auth-buttons desktop-buttons" id="desktop-auth-buttons">
+                    <div class="auth-skeleton"></div>
                     <!-- Will be populated by JavaScript -->
                 </div>
                 
@@ -101,6 +138,9 @@
     <!-- Streamlined JavaScript - Just for auth state and interactions -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Remove loading class to hide skeletons
+            document.body.classList.remove('loading');
+            
             // Initialize header functionality
             initHeader();
             
@@ -146,44 +186,54 @@
             
             if (isLoggedIn && user) {
                 // Desktop profile button
-                desktopAuthButtons.innerHTML = `
-                    <div class="profile-btn">
-                        <img src="${user.avatar}" alt="Profile">
-                        <span>${user.username}</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="profile-menu">
-                        <ul>
-                            <li><a href="profile.html"><i class="fas fa-user"></i> My Profile</a></li>
-                            <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
-                            <li class="logout"><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                        </ul>
-                    </div>
-                `;
-                
-                // Mobile profile buttons
-                mobileAuthButtons.innerHTML = `
-                    <a href="profile.html" class="btn login-btn"><i class="fas fa-user"></i> My Profile</a>
-                    <a href="#" id="mobile-logout-btn" class="btn register-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                `;
-                
-                // Add logout event listeners
-                document.getElementById('logout-btn')?.addEventListener('click', handleLogout);
-                document.getElementById('mobile-logout-btn')?.addEventListener('click', handleLogout);
-                
-                // Profile dropdown toggle
-                const profileBtn = document.querySelector('.profile-btn');
-                if (profileBtn) {
-                    profileBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        this.classList.toggle('active');
-                    });
+                if (!desktopAuthButtons.querySelector('.profile-btn')) {
+                    // Only rebuild if profile button doesn't exist yet
+                    desktopAuthButtons.innerHTML = `
+                        <div class="profile-btn">
+                            <img src="${user.avatar}" alt="Profile" class="user-avatar">
+                            <span class="username">${user.username}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="profile-menu">
+                            <ul>
+                                <li><a href="profile.html"><i class="fas fa-user"></i> My Profile</a></li>
+                                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                                <li class="logout"><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    `;
                     
-                    // Close dropdown when clicking outside
-                    document.addEventListener('click', function() {
-                        profileBtn.classList.remove('active');
-                    });
+                    // Mobile profile buttons
+                    mobileAuthButtons.innerHTML = `
+                        <a href="profile.html" class="btn login-btn"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="#" id="mobile-logout-btn" class="btn register-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    `;
+                    
+                    // Add logout event listeners
+                    document.getElementById('logout-btn')?.addEventListener('click', handleLogout);
+                    document.getElementById('mobile-logout-btn')?.addEventListener('click', handleLogout);
+                    
+                    // Profile dropdown toggle
+                    const profileBtn = document.querySelector('.profile-btn');
+                    if (profileBtn) {
+                        profileBtn.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            this.classList.toggle('active');
+                        });
+                        
+                        // Close dropdown when clicking outside
+                        document.addEventListener('click', function() {
+                            profileBtn.classList.remove('active');
+                        });
+                    }
+                } else {
+                    // Just update the existing elements
+                    const avatars = desktopAuthButtons.querySelectorAll('.user-avatar');
+                    const usernames = desktopAuthButtons.querySelectorAll('.username');
+                    
+                    avatars.forEach(avatar => avatar.src = user.avatar);
+                    usernames.forEach(username => username.textContent = user.username);
                 }
             } else {
                 // Not logged in - show login/register buttons
