@@ -375,10 +375,18 @@
           });
       }
     });
+    window.onload = function() {
+      // Force scroll to top on page load/refresh
+      window.scrollTo(0, 0);
+      
+      // Initialize your modals
+      setupGameCardModals();
+      setupTournamentModals();
+    };
   </script>
   
   <script src="header.js"></script>
-  <script src="modal;.js"></script>
+  <script src="modal.js"></script>
 
 
 </body>

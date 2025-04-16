@@ -187,3 +187,8 @@ function setupGameCardModals() {
     modalBackdrop.classList.remove('active');
     document.body.style.overflow = '';
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    setupGameCardModals();
+    setupTournamentModals();
+  });
