@@ -1,6 +1,7 @@
 function setupGameCardModals() {
     // Game data - using your existing data
     const gameData = {
+
       'Cyber Nexus': {
         category: 'Action',
         rating: '4.8',
@@ -32,8 +33,67 @@ function setupGameCardModals() {
         image: '/api/placeholder/900/600',
         description: 'Join elite special forces in high-stakes tactical operations around the world. Master weapons, coordinate with your team, and complete objectives in this intense first-person shooter experience.',
         features: ['Team-based Gameplay', 'Realistic Weapons', 'Multiple Game Modes', 'Seasonal Rankings', 'Custom Loadouts', 'Strategic Maps']
-      }
-    };
+      },
+      'Snake Game': {  
+      category: 'Arcade',  
+      rating: '4.2',  
+      players: '5.0K',  
+      image: '/public/images/snakeGame.jpg',   
+      description: 'Classic Snake Game with smooth controls and challenging levels. Guide your snake to eat food and grow longer without crashing into the walls or yourself. Perfect for quick fun and improving reflexes.',  
+      features: [  
+        'Classic Gameplay','Multiple Levels',  'Simple Controls', 'High Score Tracking', 'Mobile Friendly', 'Retro Graphics'],
+        Url: '/pages/Games/snakeGame.html'   
+     },
+      'Slide Number Game': {  
+      category: 'Puzzle',  
+      rating: '4.5',  
+      players: '3.2K',  
+      image: '/public/images/slideNumberGame.jpg',  
+      description: 'Engage your brain with the classic Slide Number Puzzle. Slide the numbered tiles to arrange them in numerical order, testing your problem-solving skills and patience. A perfect mix of challenge and fun for all ages.',  
+      features: [  
+        'Classic Puzzle Gameplay',  
+        'Multiple Difficulty Levels',  
+        'Smooth Sliding Animations',  
+        'Timer and Moves Tracking',  
+        'Mobile Friendly',  
+        'Clean and Minimalist Design'  
+      ],  
+      Url: '/pages/Games/slideNumberGame.html'  
+    },
+    'Image Matching': {  
+      category: 'Puzzle',  
+      rating: '4.3',  
+      players: '4.5K',  
+      image: '/public/images/imageMatching.jpg',  
+      description: 'Test your memory and concentration with the Image Matching game. Flip cards to find pairs of matching images. Fun and addictive gameplay suitable for players of all ages.',  
+      features: [  
+        'Classic Memory Match Gameplay',  
+        'Variety of Image Themes',  
+        'Time Challenge Mode',  
+        'Simple and Intuitive Controls',  
+        'Mobile Friendly',  
+        'Colorful Graphics'  
+      ],  
+      Url: '/pages/Games/imageMatching.html'  
+    },  
+
+    'Color Puzzle': {  
+      category: 'Puzzle',  
+      rating: '4.6',  
+      players: '3.8K',  
+      image: '/public/images/colorPuzzle.jpg',  
+      description: 'Train your brain with the Color Puzzle game. Arrange and match colors by solving fun and challenging puzzles. A great way to improve logical thinking and color recognition.',  
+      features: [  
+        'Unique Color Matching Mechanics',  
+        'Multiple Challenging Levels',  
+        'Smooth and Responsive Controls',  
+        'Progress Tracking',  
+        'Mobile Friendly',  
+        'Bright and Engaging Visuals'  
+      ],  
+      Url: '/pages/Games/colorPuzzle.html'  
+    },       
+};
   
     // Create modal container only if it doesn't exist
     let modalContainer = document.querySelector('.game-modal-container');
@@ -98,7 +158,11 @@ function setupGameCardModals() {
                 </div>
               </div>
               <div class="game-modal-buttons">
-                <a href="#" class="play-now-expanded">Play Now</a>
+                <button  
+                  class="play-now-expanded"  
+                  onclick="startGame('${game.Url || '#'}')">  
+                  Start Game  
+                </button>  
               </div>
             </div>
           </div>
@@ -138,6 +202,13 @@ function setupGameCardModals() {
       }, 300);
     }
   }
+  function startGame(url) {  
+    if (url) {  
+      window.location.href = url;  
+    } else {  
+      console.error('Game URL not found');  
+    }  
+  }  
   
   function setupTournamentModals() {
     const tournamentButtons = document.querySelectorAll('.tournament-btn');

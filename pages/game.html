@@ -1,129 +1,315 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GamersHaven | Games</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/styles/game.css">
-    <link rel="stylesheet" href="/styles/header.css">
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameHub Games</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="/styles/game.css">
+  <!-- Preload header for improved performance -->
+  <link rel="preload" href="/styles/header.html" as="fetch" crossorigin>
+  <link rel="preload" href="/styles/footer.html" as="fetch" crossorigin>
+  <link rel="preload" href="/styles/modal.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+</head>
+<body>
+  
+  <div id="header-container"></div>
+  <!-- Hero Section -->
+  <section class="hero">  
+    <div class="container">  
+        <div class="hero-badge">  
+            <i class="fas fa-gamepad"></i> 100+ Exciting Games Available  
+        </div>  
+        
+        <div class="hero-content">  
+            <h1>Discover Your Next Favorite Game</h1>  
+            <p>Browse, explore, and dive into a wide variety of games across multiple genres. Gear up for intense competition and fun.</p>  
+            
+            <div class="hero-buttons">  
+                <button class="hero-btn btn-primary">  
+                    <i class="fas fa-search"></i> Browse Games  
+                </button>  
+                <button class="hero-btn btn-secondary">  
+                    <i class="fas fa-heart"></i> Popular Games  
+                </button>  
+            </div>  
+            
+            <div class="hero-stats">  
+                <div class="stat-item">  
+                    <div class="stat-number">50+</div>  
+                    <div class="stat-label">Genres</div>  
+                </div>  
+                
+                <div class="stat-item">  
+                    <div class="stat-number">200+</div>  
+                    <div class="stat-label">Active Players</div>  
+                </div>  
+                
+                <div class="stat-item">  
+                    <div class="stat-number">1000+</div>  
+                    <div class="stat-label">Tournaments Played</div>  
+                </div>  
+            </div>  
+        </div>  
+    </div>  
+</section>  
 
-    <!-- Header with Navigation -->
-    <div id="header-container"></div>
+ <!-- Featured Games Section -->
+ <section id="featured" class="featured-games">
+  <div class="section-header">
+    <h2>Featured Games</h2>
+    <p>Check out the hottest titles our community is playing</p>
+  </div>
+  
+  <div class="games-grid">
+    <div class="game-card">
+      <div class="game-image">
+        <img src="/public/images/snakeGame.jpg" alt="Game 1">
+        <div class="game-overlay">
+          <span class="game-category">Arcade</span>
+        </div>
+      </div>
+      <div class="game-info">
+        <h3>Snake Game</h3>
+        <div class="game-meta">
+          <span class="game-rating"><i class="fas fa-star"></i> 4.8</span>
+          <span class="game-players"><i class="fas fa-users"></i> 2.3K</span>
+        </div>
+        <a href="/pages/Games/snakeGame.html" class="play-now">Play Now</a>
+      </div>
+    </div>
 
-    <section id="featured" class="featured-games">
-        <div class="section-header">
-        <h2>Featured Games</h2>
-        <p>Explore the most popular games played by the community</p>
+    <div class="game-card">
+      <div class="game-image">
+        <img src="/public/images/slideNumberGame.jpg" alt="Game 2">
+        <div class="game-overlay">
+          <span class="game-category">Puzzle</span>
         </div>
-        
-        <div class="games-grid">
-        <!-- Game Card 1 -->
-        <div class="game-card" data-genre="action">
-            <div class="game-image">
-            <img src="../images/game1.jpg" alt="Battle Royale">
-            <div class="game-overlay">
-                <span class="game-category">Action</span>
-            </div>
-            </div>
-            <div class="game-info">
-            <h3>Battle Royale</h3>
-            <p>Survive and dominate in a thrilling last-man-standing battle.</p>
-            <a href="#" class="play-now">Play Now</a>
-            </div>
+      </div>
+      <div class="game-info">
+        <h3>Slide Number Game</h3>
+        <div class="game-meta">
+          <span class="game-rating"><i class="fas fa-star"></i> 4.6</span>
+          <span class="game-players"><i class="fas fa-users"></i> 1.8K</span>
         </div>
-        
-        <!-- Game Card 2 -->
-        <div class="game-card" data-genre="rpg">
-            <div class="game-image">
-            <img src="../images/game2.jpg" alt="Fantasy Quest">
-            <div class="game-overlay">
-                <span class="game-category">RPG</span>
-            </div>
-            </div>
-            <div class="game-info">
-            <h3>Fantasy Quest</h3>
-            <p>Embark on an epic adventure filled with magic and mysteries.</p>
-            <a href="#" class="play-now">Play Now</a>
-            </div>
+        <a href="/pages/Games/slideNumberGame.html" class="play-now">Play Now</a>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-image">
+        <img src="../public/images/Eternalrelme.jpg" alt="Game 3">
+        <div class="game-overlay">
+          <span class="game-category">Puzzle</span>
         </div>
-        
-        <!-- Game Card 3 -->
-        <div class="game-card" data-genre="strategy">
-            <div class="game-image">
-            <img src="../images/game3.jpg" alt="Galactic Wars">
-            <div class="game-overlay">
-                <span class="game-category">Strategy</span>
-            </div>
-            </div>
-            <div class="game-info">
-            <h3>Galactic Wars</h3>
-            <p>Command your fleet and conquer galaxies in strategic warfare.</p>
-            <a href="#" class="play-now">Play Now</a>
-            </div>
+      </div>
+      <div class="game-info">
+        <h3>Image Matching</h3>
+        <div class="game-meta">
+          <span class="game-rating"><i class="fas fa-star"></i> 4.9</span>
+          <span class="game-players"><i class="fas fa-users"></i> 3.1K</span>
         </div>
-        
-        <!-- Game Card 4 -->
-        <div class="game-card" data-genre="shooter">
-            <div class="game-image">
-            <img src="../images/game4.jpg" alt="FPS Showdown">
-            <div class="game-overlay">
-                <span class="game-category">Shooter</span>
-            </div>
-            </div>
-            <div class="game-info">
-            <h3>FPS Showdown</h3>
-            <p>Engage in intense multiplayer shooting action.</p>
-            <a href="#" class="play-now">Play Now</a>
-            </div>
+        <a href="/pages/Games/imageMatching.html" class="play-now">Play Now</a>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-image">
+        <img src="/api/placeholder/300/200" alt="Game 4">
+        <div class="game-overlay">
+          <span class="game-category">Puzzle</span>
         </div>
+      </div>
+      <div class="game-info">
+        <h3>Color Puzzle</h3>
+        <div class="game-meta">
+          <span class="game-rating"><i class="fas fa-star"></i> 4.7</span>
+          <span class="game-players"><i class="fas fa-users"></i> 2.9K</span>
         </div>
-    </section>
-    <div id="footer-container"></div>
-    <script>
-        // Load the header when the page loads
-        document.addEventListener('DOMContentLoaded', function() {
-          // Add loading class to body during initial render
-          document.body.classList.add('loading');
-          
-          // Fetch and inject the header
-          fetch('/pages/header.html')
-            .then(response => response.text())
-            .then(html => {
-              document.getElementById('header-container').innerHTML = html;
-              // Initialize the header functionality
-              initHeader();
-              // Remove loading class after a short delay to ensure smooth transition
-              setTimeout(() => document.body.classList.remove('loading'), 200);
-            })
-            .catch(error => {
-              console.error('Error loading header:', error);
-              document.getElementById('header-container').innerHTML = '<p>Error loading header content.</p>';
-              document.body.classList.remove('loading');
-            });
-        });    document.addEventListener('DOMContentLoaded', function() {
-            const footerContainer = document.getElementById('footer-container');
-            if (footerContainer) {
-              fetch('/pages/footer.html')
-                .then(response => response.text())
-                .then(html => {
-                  footerContainer.innerHTML = html;
-                  footerContainer.innerHTML = html;
-                  document.getElementById('footer-container').innerHTML = html;
-                  // Initialize the header functionality
-                  initHeader();
-                  // Remove loading class after a short delay to ensure smooth transition
-                  setTimeout(() => document.body.classList.remove('loading'), 200);
-                })
-                .catch(error => {
-                  console.error('Error loading footer:', error);
-                  footerContainer.innerHTML = '<div class="error-message">Unable to load footer.</div>';
-                });
-            }
+        <a href="/pages/Games/colorPuzzle.html" class="play-now">Play Now</a>
+      </div>
+
+    </div>
+
+    <div class="game-card">
+      <div class="game-image">
+        <img src="/api/placeholder/300/200" alt="Game 4">
+        <div class="game-overlay">
+          <span class="game-category">Shooter</span>
+        </div>
+      </div>
+      <div class="game-info">
+        <h3>Tactical Ops</h3>
+        <div class="game-meta">
+          <span class="game-rating"><i class="fas fa-star"></i> 4.7</span>
+          <span class="game-players"><i class="fas fa-users"></i> 2.9K</span>
+        </div>
+        <a href="/pages/register.html" class="play-now">Play Now</a>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-image">
+        <img src="/api/placeholder/300/200" alt="Game 4">
+        <div class="game-overlay">
+          <span class="game-category">Shooter</span>
+        </div>
+      </div>
+      <div class="game-info">
+        <h3>Tactical Ops</h3>
+        <div class="game-meta">
+          <span class="game-rating"><i class="fas fa-star"></i> 4.7</span>
+          <span class="game-players"><i class="fas fa-users"></i> 2.9K</span>
+        </div>
+        <a href="/pages/register.html" class="play-now">Play Now</a>
+      </div>
+    </div>    
+
+    <div class="game-card">
+      <div class="game-image">
+        <img src="/api/placeholder/300/200" alt="Game 4">
+        <div class="game-overlay">
+          <span class="game-category">Shooter</span>
+        </div>
+      </div>
+      <div class="game-info">
+        <h3>Tactical Ops</h3>
+        <div class="game-meta">
+          <span class="game-rating"><i class="fas fa-star"></i> 4.7</span>
+          <span class="game-players"><i class="fas fa-users"></i> 2.9K</span>
+        </div>
+        <a href="/pages/register.html" class="play-now">Play Now</a>
+      </div>
+    </div>   
+
+    <div class="game-card">
+      <div class="game-image">
+        <img src="/api/placeholder/300/200" alt="Game 4">
+        <div class="game-overlay">
+          <span class="game-category">Shooter</span>
+        </div>
+      </div>
+      <div class="game-info">
+        <h3>Tactical Ops</h3>
+        <div class="game-meta">
+          <span class="game-rating"><i class="fas fa-star"></i> 4.7</span>
+          <span class="game-players"><i class="fas fa-users"></i> 2.9K</span>
+        </div>
+        <a href="/pages/register.html" class="play-now">Play Now</a>
+      </div>
+    </div>    
+
+    <div class="game-card">
+      <div class="game-image">
+        <img src="/api/placeholder/300/200" alt="Game 4">
+        <div class="game-overlay">
+          <span class="game-category">Shooter</span>
+        </div>
+      </div>
+      <div class="game-info">
+        <h3>Tactical Ops</h3>
+        <div class="game-meta">
+          <span class="game-rating"><i class="fas fa-star"></i> 4.7</span>
+          <span class="game-players"><i class="fas fa-users"></i> 2.9K</span>
+        </div>
+        <a href="/pages/register.html" class="play-now">Play Now</a>
+      </div>
+    </div>   
+
+    <div class="game-card">
+      <div class="game-image">
+        <img src="/api/placeholder/300/200" alt="Game 4">
+        <div class="game-overlay">
+          <span class="game-category">Shooter</span>
+        </div>
+      </div>
+      <div class="game-info">
+        <h3>Tactical Ops</h3>
+        <div class="game-meta">
+          <span class="game-rating"><i class="fas fa-star"></i> 4.7</span>
+          <span class="game-players"><i class="fas fa-users"></i> 2.9K</span>
+        </div>
+        <a href="/pages/register.html" class="play-now">Play Now</a>
+      </div>
+    </div> 
+
+    <div class="game-card">
+      <div class="game-image">
+        <img src="/api/placeholder/300/200" alt="Game 4">
+        <div class="game-overlay">
+          <span class="game-category">Action</span>
+        </div>
+      </div>
+      <div class="game-info">
+        <h3>Tactical Ops</h3>
+        <div class="game-meta">
+          <span class="game-rating"><i class="fas fa-star"></i> 4.7</span>
+          <span class="game-players"><i class="fas fa-users"></i> 2.9K</span>
+        </div>
+        <a href="/pages/register.html" class="play-now">Play Now</a>
+      </div>
+    </div>
+  
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div id="footer-container"></div>
+  <script>
+    // Load the header when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add loading class to body during initial render
+      document.body.classList.add('loading');
+      
+      // Fetch and inject the header
+      fetch('header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('header-container').innerHTML = html;
+          // Initialize the header functionality
+          initHeader();
+          // Remove loading class after a short delay to ensure smooth transition
+          setTimeout(() => document.body.classList.remove('loading'), 200);
+        })
+        .catch(error => {
+          console.error('Error loading header:', error);
+          document.getElementById('header-container').innerHTML = '<p>Error loading header content.</p>';
+          document.body.classList.remove('loading');
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+      const footerContainer = document.getElementById('footer-container');
+      if (footerContainer) {
+        fetch('footer.html')
+          .then(response => response.text())
+          .then(html => {
+            footerContainer.innerHTML = html;
+            footerContainer.innerHTML = html;
+            document.getElementById('footer-container').innerHTML = html;
+            // Initialize the header functionality
+            initHeader();
+            // Remove loading class after a short delay to ensure smooth transition
+            setTimeout(() => document.body.classList.remove('loading'), 200);
+          })
+          .catch(error => {
+            console.error('Error loading footer:', error);
+            footerContainer.innerHTML = '<div class="error-message">Unable to load footer.</div>';
           });
-      </script>
-      <script src="/scripts/header.js"></script>
-    </body>
-    </html>
+      }
+    });
+  </script>
+  <script src="/scripts/header.js"></script>
+  <script src="/scripts/modal.js"></script>
+  
+  </body>
+  </html>

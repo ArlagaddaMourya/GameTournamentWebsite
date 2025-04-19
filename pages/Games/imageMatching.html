@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Memory Game</title>
+    <style>
+        :root {
+            --primary: #8A2BE2;
+            --secondary: #4B0082;
+            --accent: #9932CC;
+            --background: #121212;
+            --card-back: #1E1E1E;
+            --text: #E0E0E0;
+            --success: #4CAF50;
+            --warning: #F44336;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-image: radial-gradient(circle at top right, rgba(138, 43, 226, 0.2) 0%, transparent 60%),
+                             radial-gradient(circle at bottom left, rgba(75, 0, 130, 0.2) 0%, transparent 60%);
+            background-attachment: fixed;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+        }
+        
+        #game-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px 20px;
+            background-color: rgba(30, 30, 30, 0.7);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        #start-screen, #game-container, #win-screen, #level-screen {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(30, 30, 30, 0.7);
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        #game-grid {
+            display: grid;
+            grid-gap: 15px;
+            margin: 0 auto;
+        }
+        
+        .grid-2x2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-3x2 { grid-template-columns: repeat(3, 1fr); }
+        .grid-4x2 { grid-template-columns: repeat(4, 1fr); }
+        .grid-4x3 { grid-template-columns: repeat(4, 1fr); }
+        .grid-4x4 { grid-template-columns: repeat(4, 1fr); }
+        .grid-5x4 { grid-template-columns: repeat(5, 1fr); }
+        .grid-6x4 { grid-template-columns: repeat(6, 1fr); }
+        
+        .card {
+            aspect-ratio: 1/1;
+            perspective: 1000px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+        
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card.matched .card-back {
+            background-color: var(--success);
+            box-shadow: 0 0 15px var(--success);
+        }
+        
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-front {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            transform: rotateY(180deg);
+        }
+        
+        .card-back {
+            background-color: var(--card-back);
+            border: 2px solid var(--accent);
+        }
+        
+        .card-content {
+            font-size: 2rem;
+            color: white;
+        }
+        
+        button {
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        .level-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .level-btn {
+            width: 60px;
+            height: 60px;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .level-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .level-btn.active {
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            transform: scale(1.1);
+        }
+        
+        #win-screen {
+            display: none;
+            animation: fadeIn 1s;
+        }
+        
+        #level-screen {
+            display: none;
+            animation: fadeIn 1s;
+        }
+        
+        #win-message {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        #win-stats {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        #start-screen {
+            animation: fadeIn 1s;
+        }
+        
+        #current-level {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 5s infinite;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+        
+        .win-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary);
+            opacity: 0.8;
+            border-radius: 50%;
+            animation: fall 3s linear forwards;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        #game-container {
+            display: none;
+        }
+        
+        .level-select {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .level-description {
+            margin-top: 10px;
+            font-style: italic;
+            color: #AAA;
+        }
+        
+        .progress-container {
+            width: 100%;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .level-progress {
+            flex-grow: 1;
+            height: 8px;
+            background-color: var(--card-back);
+            border-radius: 4px;
+            margin: 0 10px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Space Memory</h1>
+        <div id="game-details">
+            <div class="stat">
+                <div>Level</div>
+                <div id="level-display" class="stat-value">-</div>
+            </div>
+            <div class="stat">
+                <div>Moves</div>
+                <div id="moves" class="stat-value">0</div>
+            </div>
+            <div class="stat">
+                <div>Time</div>
+                <div id="time" class="stat-value">00:00</div>
+            </div>
+            <div class="stat">
+                <div>Score</div>
+                <div id="score" class="stat-value">0</div>
+            </div>
+        </div>
+    </header>
+
+    <div id="start-screen">
+        <h2>Welcome to Space Memory!</h2>
+        <p>Match all the space-themed pairs to win. Choose a difficulty level to begin.</p>
+        <button id="start-button">Choose Level</button>
+    </div>
+    
+    <div id="level-screen">
+        <h2>Select Difficulty Level</h2>
+        <p>Higher levels have more cards to match.</p>
+        
+        <div class="level-options">
+            <button class="level-btn" data-level="4">4</button>
+            <button class="level-btn" data-level="5">5</button>
+            <button class="level-btn" data-level="6">6</button>
+            <button class="level-btn" data-level="7">7</button>
+            <button class="level-btn" data-level="8">8</button>
+            <button class="level-btn" data-level="9">9</button>
+            <button class="level-btn" data-level="10">10</button>
+        </div>
+        
+        <div class="level-description">
+            <p id="level-info">Select a level to see details</p>
+        </div>
+        
+        <button id="start-game-button" disabled>Start Game</button>
+    </div>
+
+    <div id="game-container">
+        <div id="current-level"></div>
+        <div class="progress-container">
+            <span>Progress:</span>
+            <div class="level-progress">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <span id="progress-text">0%</span>
+        </div>
+        <div id="game-grid"></div>
+        <div>
+            <button id="restart-button">Restart Level</button>
+            <button id="change-level-button">Change Level</button>
+        </div>
+    </div>
+
+    <div id="win-screen">
+        <h2 id="win-message">You Won!</h2>
+        <div id="win-stats"></div>
+        <div>
+            <button id="next-level-button">Next Level</button>
+            <button id="play-again-button">Retry Level</button>
+            <button id="select-level-button">Select Level</button>
+        </div>
+    </div>
+
+    <div class="win-animation" id="win-animation"></div>
+
+    <script>
+        // Elements
+        const startScreen = document.getElementById('start-screen');
+        const levelScreen = document.getElementById('level-screen');
+        const gameContainer = document.getElementById('game-container');
+        const winScreen = document.getElementById('win-screen');
+        const gameGrid = document.getElementById('game-grid');
+        const startButton = document.getElementById('start-button');
+        const startGameButton = document.getElementById('start-game-button');
+        const restartButton = document.getElementById('restart-button');
+        const playAgainButton = document.getElementById('play-again-button');
+        const nextLevelButton = document.getElementById('next-level-button');
+        const selectLevelButton = document.getElementById('select-level-button');
+        const changeLevelButton = document.getElementById('change-level-button');
+        const levelButtons = document.querySelectorAll('.level-btn');
+        const levelInfo = document.getElementById('level-info');
+        const levelDisplay = document.getElementById('level-display');
+        const currentLevelDisplay = document.getElementById('current-level');
+        const movesDisplay = document.getElementById('moves');
+        const timeDisplay = document.getElementById('time');
+        const scoreDisplay = document.getElementById('score');
+        const winMessage = document.getElementById('win-message');
+        const winStats = document.getElementById('win-stats');
+        const winAnimation = document.getElementById('win-animation');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+
+        // Game state
+        let cards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let totalPairs = 0;
+        let moves = 0;
+        let score = 0;
+        let gameStarted = false;
+        let timerInterval;
+        let seconds = 0;
+        let gameActive = false;
+        let currentLevel = 0;
+
+        // Level configurations
+        const levels = [
+            { level: 4, grid: '2x2', pairs: 2, description: 'Beginner: 4 cards (2x2 grid)' },
+            { level: 5, grid: '3x2', pairs: 3, description: 'Easy: 6 cards (3x2 grid)' },
+            { level: 6, grid: '4x2', pairs: 4, description: 'Casual: 8 cards (4x2 grid)' },
+            { level: 7, grid: '4x3', pairs: 6, description: 'Medium: 12 cards (4x3 grid)' },
+            { level: 8, grid: '4x4', pairs: 8, description: 'Challenging: 16 cards (4x4 grid)' },
+            { level: 9, grid: '5x4', pairs: 10, description: 'Hard: 20 cards (5x4 grid)' },
+            { level: 10, grid: '6x4', pairs: 12, description: 'Expert: 24 cards (6x4 grid)' }
+        ];
+
+        // Space themed emojis
+        const spaceEmojis = ['🚀', '🛸', '🪐', '🌠', '👽', '🌌', '🌑', '🌟', '☄️', '🔭', '🌏', '🌙', '👨‍🚀', '🛰️', '🌞', '🌈'];
+
+        // Create stars background
+        function createStars() {
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                document.body.appendChild(star);
+            }
+        }
+
+        // Create confetti animation
+        function createConfetti() {
+            winAnimation.innerHTML = '';
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = '-20px';
+                confetti.style.backgroundColor = getRandomColor();
+                confetti.style.animationDuration = `${2 + Math.random() * 2}s`;
+                confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+                winAnimation.appendChild(confetti);
+            }
+        }
+
+        function getRandomColor() {
+            const colors = ['#8A2BE2', '#4B0082', '#9932CC', '#E0E0E0', '#4CAF50'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Initialize game
+        function initGame(levelIndex) {
+            gameGrid.innerHTML = '';
+            flippedCards = [];
+            matchedPairs = 0;
+            moves = 0;
+            score = 0;
+            seconds = 0;
+            
+            const level = levels[levelIndex];
+            currentLevel = level.level;
+            totalPairs = level.pairs;
+            
+            // Update UI
+            levelDisplay.textContent = level.level;
+            currentLevelDisplay.textContent = `Level ${level.level} - ${level.description}`;
+            gameGrid.className = '';
+            gameGrid.classList.add(`grid-${level.grid}`);
+            
+            updateStats();
+            updateProgress();
+            
+            // Prepare cards (get pairs based on level)
+            const levelEmojis = spaceEmojis.slice(0, level.pairs);
+            const cardEmojis = [...levelEmojis, ...levelEmojis];
+            
+            // Shuffle cards
+            for (let i = cardEmojis.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cardEmojis[i], cardEmojis[j]] = [cardEmojis[j], cardEmojis[i]];
+            }
+            
+            // Create card elements
+            cards = cardEmojis.map((emoji, index) => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.dataset.emoji = emoji;
+                card.dataset.index = index;
+                
+                const cardFront = document.createElement('div');
+                cardFront.classList.add('card-face', 'card-front');
+                
+                const cardContent = document.createElement('div');
+                cardContent.classList.add('card-content');
+                cardContent.textContent = emoji;
+                cardFront.appendChild(cardContent);
+                
+                const cardBack = document.createElement('div');
+                cardBack.classList.add('card-face', 'card-back');
+                
+                card.appendChild(cardFront);
+                card.appendChild(cardBack);
+                
+                card.addEventListener('click', () => flipCard(card));
+                
+                gameGrid.appendChild(card);
+                return card;
+            });
+        }
+
+        // Flip card
+        function flipCard(card) {
+            if (!gameActive || flippedCards.length >= 2 || card.classList.contains('flipped') || card.classList.contains('matched')) {
+                return;
+            }
+            
+            card.classList.add('flipped');
+            flippedCards.push(card);
+            
+            if (flippedCards.length === 2) {
+                moves++;
+                updateStats();
+                
+                // Check for match
+                if (flippedCards[0].dataset.emoji === flippedCards[1].dataset.emoji) {
+                    // It's a match!
+                    matchedPairs++;
+                    
+                    // Calculate score based on level and time
+                    const levelBonus = currentLevel * 5;
+                    const timeBonus = Math.max(0, 100 - seconds);
+                    score += 10 + levelBonus + timeBonus;
+                    
+                    flippedCards.forEach(card => {
+                        card.classList.add('matched');
+                        setTimeout(() => {
+                            card.classList.remove('matched');
+                        }, 1000);
+                    });
+                    
+                    updateStats();
+                    updateProgress();
+                    flippedCards = [];
+                    
+                    // Check for win
+                    if (matchedPairs === totalPairs) {
+                        setTimeout(gameWin, 500);
+                    }
+                } else {
+                    // Not a match, flip cards back
+                    setTimeout(() => {
+                        flippedCards.forEach(card => card.classList.remove('flipped'));
+                        flippedCards = [];
+                    }, 1000);
+                }
+            }
+        }
+
+        // Update game stats
+        function updateStats() {
+            movesDisplay.textContent = moves;
+            scoreDisplay.textContent = score;
+            
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            timeDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+        }
+        
+        // Update progress bar
+        function updateProgress() {
+            const progressPercent = (matchedPairs / totalPairs) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+            progressText.textContent = `${Math.round(progressPercent)}%`;
+        }
+
+        // Start timer
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                seconds++;
+                updateStats();
+            }, 1000);
+        }
+
+        // Game win
+        function gameWin() {
+            gameActive = false;
+            clearInterval(timerInterval);
+            
+            // Update win screen
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            const timeString = `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+            
+            winMessage.textContent = getWinMessage();
+            winStats.innerHTML = `
+                <p>Level ${currentLevel} completed!</p>
+                <p>Time: ${timeString}</p>
+                <p>Moves: ${moves}</p>
+                <p>Final Score: ${score} points</p>
+            `;
+            
+            // Show win screen with animation
+            gameContainer.style.display = 'none';
+            winScreen.style.display = 'block';
+            
+            // Toggle next level button
+            if (currentLevel < 10) {
+                nextLevelButton.style.display = 'inline-block';
+            } else {
+                nextLevelButton.style.display = 'none';
+            }
+            
+            // Trigger confetti animation
+            createConfetti();
+        }
+
+        // Get random win message
+        function getWinMessage() {
+            const messages = [
+                "Cosmic Victory!",
+                "Stellar Memory!",
+                "You're Out of This World!",
+                "Galactic Champion!",
+                "Space Master!"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+
+        // Start game with selected level
+        function startGame() {
+            // Find selected level button
+            const selectedBtn = document.querySelector('.level-btn.active');
+            if (!selectedBtn) return;
+            
+            const levelValue = parseInt(selectedBtn.dataset.level);
+            const levelIndex = levels.findIndex(l => l.level === levelValue);
+            
+            initGame(levelIndex);
+            levelScreen.style.display = 'none';
+            gameContainer.style.display = 'block';
+            winScreen.style.display = 'none';
+            gameActive = true;
+            startTimer();
+        }
+
+        // Restart game
+        function restartGame() {
+            clearInterval(timerInterval);
+            const levelIndex = levels.findIndex(l => l.level === currentLevel);
+            initGame(levelIndex);
+            gameActive = true;
+            startTimer();
+        }
+        
+        // Next level
+        function nextLevel() {
+            const currentIndex = levels.findIndex(l => l.level === currentLevel);
+            const nextIndex = currentIndex + 1;
+            
+            if (nextIndex < levels.length) {
+                clearInterval(timerInterval);
+                initGame(nextIndex);
+                winScreen.style.display = 'none';
+                gameContainer.style.display = 'block';
+                gameActive = true;
+                startTimer();
+            }
+        }
+        
+        // Show level selection
+        function showLevelSelect() {
+            clearInterval(timerInterval);
+            startScreen.style.display = 'none';
+            gameContainer.style.display = 'none';
+            winScreen.style.display = 'none';
+            levelScreen.style.display = 'block';
+        }
+        
+        // Handle level button clicks
+        levelButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                levelButtons.forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                // Enable start button
+                startGameButton.disabled = false;
+                
+                // Update level info
+                const levelValue = parseInt(btn.dataset.level);
+                const level = levels.find(l => l.level === levelValue);
+                levelInfo.textContent = level.description;
+            });
+        });
+
+        // Event listeners
+        startButton.addEventListener('click', showLevelSelect);
+        startGameButton.addEventListener('click', startGame);
+        restartButton.addEventListener('click', restartGame);
+        playAgainButton.addEventListener('click', () => {
+            winScreen.style.display = 'none';
+            gameContainer.style.display = 'block';
+            restartGame();
+        });
+        nextLevelButton.addEventListener('click', nextLevel);
+        selectLevelButton.addEventListener('click', showLevelSelect);
+        changeLevelButton.addEventListener('click', showLevelSelect);
+
+        // Create stars on load
+        createStars();
+    </script>
+</body>
+</html>

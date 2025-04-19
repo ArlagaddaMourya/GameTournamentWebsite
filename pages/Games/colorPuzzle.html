@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Color Match Game - Dark Theme</title>
+<style>
+  /* Reset */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #121212, #1e1e2f);
+    color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .container {
+    background: #232332;
+    border-radius: 16px;
+    max-width: 460px;
+    width: 100%;
+    padding: 30px 25px 40px;
+    box-shadow:
+      0 0 20px #7c4dffcc,
+      inset 0 0 30px #5a3ecb88;
+    text-align: center;
+    user-select: none;
+  }
+  h1 {
+    font-weight: 900;
+    font-size: 2.5rem;
+    color: #bb86fc;
+    text-shadow: 0 0 14px #bb86fc;
+    margin-bottom: 8px;
+  }
+  p.instruction {
+    font-size: 1.15rem;
+    color: #bfc0c8cc;
+    margin-bottom: 22px;
+  }
+  .scoreboard {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    color: #03dac6;
+  }
+  .scoreboard span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .target-color {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 24px;
+    border-radius: 16px;
+    border: 4px solid #bb86fc;
+    box-shadow: 0 0 24px #bb86fccc;
+    transition: background-color 0.4s ease;
+  }
+  #difficulty-level {
+    margin-bottom: 24px;
+    color: #a4f3e0cc;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-shadow: 0 0 10px #03dac6cc;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .tile {
+    width: 100%;
+    aspect-ratio: 1 / 0.75;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 0 8px transparent;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    outline-offset: 4px;
+  }
+  .tile:hover, .tile:focus-visible {
+    transform: scale(1.1) rotate(3deg);
+    box-shadow: 0 0 30px #bb86fcc9;
+    outline: none;
+  }
+  .tile.correct {
+    animation: correctGlow 0.8s ease forwards;
+  }
+  .tile.incorrect {
+    animation: incorrectShake 0.6s ease forwards;
+  }
+  @keyframes correctGlow {
+    0% {
+      box-shadow: 0 0 15px #4caf5080;
+      transform: scale(1) rotate(0);
+    }
+    50% {
+      box-shadow: 0 0 40px #4caf50ff;
+      transform: scale(1.15) rotate(15deg);
+    }
+    100% {
+      box-shadow: 0 0 15px #4caf5080;
+      transform: scale(1) rotate(0);
+    }
+  }
+  @keyframes incorrectShake {
+    0%, 100% {
+      transform: translateX(0) rotate(0);
+      box-shadow: 0 0 15px #f4433680;
+    }
+    20%, 60% {
+      transform: translateX(-10px) rotate(-10deg);
+      box-shadow: 0 0 33px #f44336ff;
+    }
+    40%, 80% {
+      transform: translateX(10px) rotate(10deg);
+      box-shadow: 0 0 33px #f44336ff;
+    }
+  }
+  .timer-bar {
+    width: 100%;
+    height: 14px;
+    background: #444455;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 18px;
+    box-shadow: inset 0 0 10px #222233;
+  }
+  .timer-fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #03dac6, #67e8f9);
+    transition: width 0.1s linear;
+    border-radius: 14px;
+  }
+  button {
+    background: linear-gradient(135deg, #bb86fc, #3700b3);
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border-radius: 16px;
+    padding: 14px 28px;
+    cursor: pointer;
+    box-shadow: 0 0 20px #bb86fcaa;
+    user-select: none;
+    transition: background 0.4s ease, box-shadow 0.3s ease;
+  }
+  button:hover:not(:disabled) {
+    background: linear-gradient(135deg, #d091ff, #6f3aff);
+    box-shadow: 0 0 28px #d091ffcc;
+  }
+  button:disabled {
+    opacity: 0.55;
+    cursor: default;
+  }
+  #game-over-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 10, 40, 0.95);
+    color: #eee;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.4rem;
+    font-weight: 700;
+    z-index: 9999;
+    user-select: none;
+    padding: 20px;
+    text-align: center;
+  }
+  #game-over-overlay p {
+    margin: 18px 0 30px;
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: #bb86fccc;
+  }
+  #game-over-overlay button {
+    font-size: 1.6rem;
+    padding: 14px 36px;
+    border-radius: 28px;
+    box-shadow: 0 0 25px #bb86fccc;
+  }
+</style>
+</head>
+<body>
+<div class="container" role="main" aria-live="polite" aria-label="Color match game">
+  <h1>Color Match</h1>
+  <p class="instruction">Click the color tile that matches the target below!</p>
+  <div class="scoreboard" aria-atomic="true">
+    <span>🏅 Score: <strong id="score">0</strong></span>
+    <span>⚡ High Score: <strong id="high-score">0</strong></span>
+  </div>
+  <div id="target-color" class="target-color" aria-label="Target color to match"></div>
+  <div id="difficulty-level" aria-live="polite">Difficulty: Easy (Level 1)</div>
+  <div class="timer-bar" aria-label="Time remaining">
+    <div id="timer-fill" class="timer-fill"></div>
+  </div>
+  <div class="grid" id="colors-grid" role="grid" aria-label="Color choices"></div>
+  <button id="start-button" aria-label="Start the game">Start Game</button>
+</div>
+
+<div id="game-over-overlay" role="alertdialog" aria-modal="true" aria-labelledby="game-over-title" aria-describedby="game-over-message">
+  <h2 id="game-over-title">Game Over!</h2>
+  <p id="game-over-message">Your score: <span id="final-score">0</span></p>
+  <button id="restart-button" aria-label="Restart the game">Play Again</button>
+</div>
+
+<script>
+  (() => {
+    const startButton = document.getElementById('start-button');
+    const restartButton = document.getElementById('restart-button');
+    const scoreDisplay = document.getElementById('score');
+    const highScoreDisplay = document.getElementById('high-score');
+    const targetColorDisplay = document.getElementById('target-color');
+    const difficultyDisplay = document.getElementById('difficulty-level');
+    const colorsGrid = document.getElementById('colors-grid');
+    const timerFill = document.getElementById('timer-fill');
+    const gameOverOverlay = document.getElementById('game-over-overlay');
+    const finalScoreDisplay = document.getElementById('final-score');
+
+    let score = 0;
+    let highScore = Number(localStorage.getItem('colorMatchHighScore') || 0);
+    let difficulty = 1;
+    let maxLevel = 100;
+    let timerInterval;
+    let timeLeftPercent = 100;
+    let allowInput = false;
+
+    const easyDistance = 100;
+    const mediumDistance = 40;
+    const hardDistance = 15;
+
+    highScoreDisplay.textContent = highScore;
+
+    function randomColor() {
+      return `rgb(${randomChannel()}, ${randomChannel()}, ${randomChannel()})`;
+    }
+    function randomChannel() {
+      return Math.floor(Math.random() * 256);
+    }
+    function colorDistance(a, b) {
+      const c1 = a.match(/\d+/g).map(Number);
+      const c2 = b.match(/\d+/g).map(Number);
+      return Math.sqrt(
+        (c1[0] - c2[0])**2 +
+        (c1[1] - c2[1])**2 +
+        (c1[2] - c2[2])**2
+      );
+    }
+    function getDistinctColor(existingColors, minDistance) {
+      for(let i = 0; i < 100; i++) {
+        const color = randomColor();
+        if(existingColors.every(c => colorDistance(color, c) >= minDistance))
+          return color;
+      }
+      return randomColor(); // fallback
+    }
+    function getSimilarColor(base, diff) {
+      const rgb = base.match(/\d+/g).map(Number);
+      const r = clamp(rgb[0] + Math.floor(Math.random() * diff * 2) - diff, 0, 255);
+      const g = clamp(rgb[1] + Math.floor(Math.random() * diff * 2) - diff, 0, 255);
+      const b = clamp(rgb[2] + Math.floor(Math.random() * diff * 2) - diff, 0, 255);
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+    function clamp(n, min, max) {
+      return Math.min(max, Math.max(min, n));
+    }
+
+    function updateDifficultyText() {
+      let text = "Easy";
+      if(difficulty >= 50) text = "Hard";
+      else if(difficulty >= 20) text = "Medium";
+      difficultyDisplay.textContent = `Difficulty: ${text} (Level ${difficulty})`;
+    }
+
+    function setupLevel() {
+      allowInput = true;
+      colorsGrid.innerHTML = "";
+      let baseColor;
+      let minDist;
+
+      if(difficulty < 20) {
+        minDist = easyDistance;
+        const colors = [];
+        colors.push(getDistinctColor(colors, minDist));
+        for(let i=0; i < 5; i++) {
+          colors.push(getDistinctColor(colors, minDist));
+        }
+        baseColor = colors[0];
+        colors.sort(() => Math.random() - 0.5);
+        createTiles(colors, baseColor);
+      } else if (difficulty < 50) {
+        minDist = mediumDistance;
+        baseColor = randomColor();
+        const colors = [baseColor];
+        for(let i=0; i < 5; i++) {
+          colors.push(getSimilarColor(baseColor, minDist));
+        }
+        colors.sort(() => Math.random() - 0.5);
+        createTiles(colors, baseColor);
+      } else {
+        minDist = hardDistance;
+        baseColor = randomColor();
+        const colors = [baseColor];
+        for(let i=0; i < 5; i++) {
+          colors.push(getSimilarColor(baseColor, minDist));
+        }
+        colors.sort(() => Math.random() - 0.5);
+        createTiles(colors, baseColor);
+      }
+
+      targetColorDisplay.style.backgroundColor = baseColor;
+      updateDifficultyText();
+      resetTimer();
+      startTimer();
+    }
+
+    function createTiles(colors, baseColor) {
+      colors.forEach(color => {
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        tile.style.backgroundColor = color;
+        tile.tabIndex = 0;
+        tile.setAttribute('role', 'button');
+        tile.setAttribute('aria-label', `Select color ${color}`);
+        tile.addEventListener('click', () => handleGuess(color, baseColor, tile));
+        tile.addEventListener('keydown', e => {
+          if(e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleGuess(color, baseColor, tile);
+          }
+        });
+        colorsGrid.appendChild(tile);
+      });
+    }
+
+    function handleGuess(selectedColor, baseColor, tile) {
+      if (!allowInput) return;
+      allowInput = false;
+      clearInterval(timerInterval);
+      const tiles = colorsGrid.querySelectorAll('.tile');
+
+      if(selectedColor === baseColor) {
+        tile.classList.add('correct');
+        score++;
+        difficulty = Math.min(difficulty + 1, maxLevel);
+        scoreDisplay.textContent = score;
+        setTimeout(() => {
+          tile.classList.remove('correct');
+          setupLevel();
+        }, 900);
+      } else {
+        tile.classList.add('incorrect');
+        tiles.forEach(t => t.style.pointerEvents = 'none');
+        setTimeout(() => {
+          endGame();
+        }, 700);
+      }
+    }
+
+    function startTimer() {
+      timeLeftPercent = 100;
+      timerFill.style.width = "100%";
+      let speed = Math.max(10, 120 - difficulty * 1.6  );
+
+      timerInterval = setInterval(() => {
+        timeLeftPercent -= 100 / (1500 / speed);
+        timerFill.style.width = `${timeLeftPercent}%`;
+        if(timeLeftPercent <= 0) {
+          clearInterval(timerInterval);
+          allowInput = false;
+          endGame();
+        }
+      }, speed);
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timeLeftPercent = 100;
+      timerFill.style.width = '100%';
+      allowInput = true;
+    }
+
+    function endGame() {
+      allowInput = false;
+      if(score > highScore) {
+        highScore = score;
+        localStorage.setItem('colorMatchHighScore', highScore);
+        highScoreDisplay.textContent = highScore;
+      }
+      finalScoreDisplay.textContent = score;
+      gameOverOverlay.style.display = 'flex';
+      startButton.disabled = false;
+    }
+
+    function startGame() {
+      score = 0;
+      difficulty = 1;
+      scoreDisplay.textContent = score;
+      gameOverOverlay.style.display = 'none';
+      startButton.disabled = true;
+      setupLevel();
+    }
+
+    startButton.addEventListener('click', startGame);
+    restartButton.addEventListener('click', () => {
+      gameOverOverlay.style.display = 'none';
+      startGame();
+    });
+
+  })();
+</script>
+</body>
+</html>

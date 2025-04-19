@@ -1,0 +1,474 @@
+
+:root {  
+    --bg-primary: #f0f0f0;  
+    --bg-secondary: #ffffff;  
+    --text-primary: #333;  
+    --text-secondary: #666;  
+    --piece-bg: #ddd;  
+    --piece-hover: #ccc;  
+    --empty-bg: #eee;  
+    --border-color: #333;  
+
+    --transition-speed: 0.3s;  
+}  
+
+.dark-mode {  
+    --bg-primary: #121212;  
+    --bg-secondary: #1e1e1e;  
+    --text-primary: #e0e0e0;  
+    --text-secondary: #a0a0a0;  
+    --piece-bg: #2c2c2c;  
+    --piece-hover: #3c3c3c;  
+    --empty-bg: #1a1a1a;  
+    --border-color: #444;  
+}  
+
+* {  
+    margin: 0;  
+    padding: 0;  
+    box-sizing: border-box;  
+    transition: background-color var(--transition-speed), color var(--transition-speed);  
+}  
+
+body {  
+    font-family: 'Arial', sans-serif;  
+    background-color: var(--bg-primary);  
+    color: var(--text-primary);  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    min-height: 100vh;  
+    padding: 20px;  
+}  
+
+.container {  
+    background-color: var(--bg-secondary);  
+    border-radius: 15px;  
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);  
+    padding: 30px;  
+    width: 100%;  
+    max-width: 600px;  
+    text-align: center;  
+}  
+
+.theme-toggle {  
+    position: absolute;  
+    top: 20px;  
+    right: 20px;  
+}  
+
+.theme-switch {  
+    display: none;  
+}  
+
+.theme-switch-label {  
+    display: flex;  
+    align-items: center;  
+    cursor: pointer;  
+}  
+
+.theme-icon {  
+    font-size: 24px;  
+    margin: 0 5px;  
+}  
+
+.game-title {  
+    margin-bottom: 20px;  
+    font-size: 2rem;  
+    color: var(--text-primary);  
+}  
+
+.level-select-container {  
+    margin-bottom: 20px;  
+}  
+
+.level-select {  
+    padding: 10px;  
+    border-radius: 5px;  
+    border: 1px solid var(--border-color);  
+    background-color: var(--bg-secondary);  
+    color: var(--text-primary);  
+    width: 100%;  
+}  
+
+.puzzle-container {  
+    display: grid;  
+    gap: 5px;  
+    border: 2px solid var(--border-color);  
+    background-color: var(--bg-secondary);  
+    max-width: 100%;  
+    aspect-ratio: 1 / 1;  
+    width: 100%;  
+    max-height: 70vh;  
+    margin-bottom: 20px;  
+}  
+
+.puzzle-piece {  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    font-size: 1.5vw;  
+    background-color: var(--piece-bg);  
+    cursor: pointer;  
+    border: 1px solid var(--border-color);  
+    transition: all var(--transition-speed) ease;  
+    overflow: hidden;  
+    text-overflow: ellipsis;  
+    transform: scale(1);  
+}  
+
+.puzzle-piece:hover {  
+    background-color: var(--piece-hover);  
+    transform: scale(1.05);  
+}  
+
+.puzzle-piece.empty {  
+    background-color: var(--empty-bg);  
+    border: 1px dashed var(--border-color);  
+    cursor: default;  
+}  
+
+.shuffle-btn {  
+    background-color: #4CAF50;  
+    color: white;  
+    border: none;  
+    padding: 10px 20px;  
+    border-radius: 5px;  
+    cursor: pointer;  
+    transition: background-color var(--transition-speed);  
+}  
+
+.shuffle-btn:hover {  
+    background-color: #45a049;  
+}  
+
+/* Start Screen Styles */
+.start-screen {  
+    position: fixed;  
+    top: 0;  
+    left: 0;  
+    width: 100%;  
+    height: 100%;  
+    background-color: rgba(0, 0, 0, 0.7);  
+    backdrop-filter: blur(10px);  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    z-index: 1000;  
+    transition: opacity 0.3s ease;  
+}  
+
+.start-screen-content {  
+    background-color: var(--bg-secondary);  
+    padding: 40px;  
+    border-radius: 15px;  
+    text-align: center;  
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);  
+    max-width: 500px;  
+    width: 90%;  
+}  
+
+.start-screen-content h1 {  
+    margin-bottom: 20px;  
+    color: var(--text-primary);  
+    font-size: 2.5rem;  
+}  
+
+.start-screen-content p {  
+    margin-bottom: 30px;  
+    color: var(--text-secondary);  
+    font-size: 1.2rem;  
+}  
+
+.start-btn {  
+    background-color: #4CAF50;  
+    color: white;  
+    border: none;  
+    padding: 15px 30px;  
+    border-radius: 10px;  
+    font-size: 1.2rem;  
+    cursor: pointer;  
+    transition: background-color 0.3s, transform 0.2s;  
+}  
+
+.start-btn:hover {  
+    background-color: #45a049;  
+    transform: scale(1.05);  
+}  
+
+.hidden {  
+    display: none !important;  
+}  
+
+.dark-mode .start-screen-content {  
+    background-color: #1e1e1e;  
+}  
+
+@media (max-width: 600px) {  
+    .puzzle-piece {  
+        font-size: 3vw;  
+    }  
+}  
+
+/* Animation Keyframes */  
+@keyframes pulse {  
+    0% { transform: scale(1); }  
+    50% { transform: scale(1.05); }  
+    100% { transform: scale(1); }  
+}  
+
+@keyframes slideIn {  
+    from {   
+        opacity: 0;   
+        transform: translateY(20px);   
+    }  
+    to {   
+        opacity: 1;   
+        transform: translateY(0);   
+    }  
+}  
+
+.puzzle-piece.move {  
+    animation: pulse 0.3s ease;  
+}  
+
+.puzzle-container {  
+    animation: slideIn 0.5s ease;  
+}
+.win-screen {  
+    position: fixed;  
+    top: 0;  
+    left: 0;  
+    width: 100%;  
+    height: 100%;  
+    background-color: rgba(0, 0, 0, 0.8);  
+    backdrop-filter: blur(10px);  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    z-index: 1000;  
+    animation: fadeIn 0.5s ease;  
+}  
+
+.win-screen-content {  
+    background-color: var(--bg-secondary);  
+    padding: 40px;  
+    border-radius: 15px;  
+    text-align: center;  
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);  
+    max-width: 500px;  
+    width: 90%;  
+    animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);  
+}  
+
+.win-screen-content h1 {  
+    color: #4CAF50;  
+    font-size: 2.5rem;  
+    margin-bottom: 20px;  
+    text-shadow: 0 4px 6px rgba(0,0,0,0.1);  
+}  
+
+.win-stats {  
+    display: flex;  
+    justify-content: space-around;  
+    margin: 30px 0;  
+    color: var(--text-secondary);  
+}  
+
+.win-actions {  
+    display: flex;  
+    justify-content: center;  
+    gap: 20px;  
+}  
+
+.play-again-btn, .next-level-btn {  
+    background-color: #4CAF50;  
+    color: white;  
+    border: none;  
+    padding: 15px 30px;  
+    border-radius: 10px;  
+    font-size: 1.1rem;  
+    cursor: pointer;  
+    transition: background-color 0.3s, transform 0.2s;  
+}  
+
+.play-again-btn:hover, .next-level-btn:hover {  
+    background-color: #45a049;  
+    transform: scale(1.05);  
+}  
+
+.timer {  
+    margin-bottom: 20px;  
+    font-size: 1.2rem;  
+    color: var(--text-secondary);  
+}  
+
+/* Win Screen Animations */  
+@keyframes fadeIn {  
+    from { opacity: 0; }  
+    to { opacity: 1; }  
+}  
+
+@keyframes popIn {  
+    0% {   
+        transform: scale(0.5);   
+        opacity: 0;   
+    }  
+    70% {   
+        transform: scale(1.1);   
+        opacity: 0.7;   
+    }  
+    100% {   
+        transform: scale(1);   
+        opacity: 1;   
+    }  
+}  
+
+/* Confetti Animation */  
+@keyframes confetti {  
+    0% {   
+        transform: translateY(0) rotate(0deg);   
+        opacity: 1;   
+    }  
+    100% {   
+        transform: translateY(100vh) rotate(360deg);   
+        opacity: 0;   
+    }  
+}  
+
+.confetti {  
+    position: fixed;  
+    width: 15px;  
+    height: 15px;  
+    background-color: transparent;  
+    z-index: 999;  
+    pointer-events: none;  
+}  
+
+/* Win Screen Overlay */  
+.win-screen {  
+    position: fixed;  
+    top: 0;  
+    left: 0;  
+    width: 100vw;  
+    height: 100vh;  
+    background-color: rgba(0, 0, 0, 0.85);  
+    backdrop-filter: blur(12px);  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    z-index: 9999;  
+    animation: fadeIn 0.5s ease forwards;  
+}  
+
+/* Hide class to toggle visibility */  
+.win-screen.hidden {  
+    display: none !important;  
+}  
+
+/* Popup Content */  
+.win-screen-content {  
+    background: #ffffff;  
+    max-width: 480px;  
+    width: 90%;  
+    padding: 3rem 2.5rem;  
+    border-radius: 18px;  
+    box-shadow: 0 16px 40px rgb(0 0 0 / 0.15);  
+    text-align: center;  
+    animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);  
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
+}  
+
+/* Heading */  
+.win-screen-content h1 {  
+    font-size: 2.8rem;  
+    color: #4CAF50;  
+    margin-bottom: 0.8rem;  
+    text-shadow: 0 3px 8px rgba(76, 175, 80, 0.5);  
+    font-weight: 700;  
+}  
+
+/* Subtext */  
+.win-screen-content p {  
+    font-size: 1.3rem;  
+    color: #555555;  
+    margin-bottom: 2rem;  
+    font-weight: 500;  
+}  
+
+/* Stats Container */  
+.win-stats {  
+    display: flex;  
+    justify-content: center;  
+    gap: 2rem;  
+    margin-bottom: 2.8rem;  
+}  
+
+.win-stats p {  
+    font-size: 1.2rem;  
+    color: #777777;  
+    font-weight: 600;  
+    border: 2px solid #4CAF50;  
+    padding: 0.75rem 1.5rem;  
+    border-radius: 12px;  
+    min-width: 110px;  
+    box-shadow: inset 0 0 8px rgba(76, 175, 80, 0.15);  
+    background: #e8f5e9; /* subtle green background */  
+}  
+
+/* Buttons Container */  
+.win-actions {  
+    display: flex;  
+    justify-content: center;  
+    gap: 1.6rem;  
+}  
+
+/* Buttons */  
+.play-again-btn,  
+.next-level-btn {  
+    background-color: #4CAF50;  
+    color: #fff;  
+    font-size: 1.15rem;  
+    font-weight: 600;  
+    padding: 0.85rem 2.2rem;  
+    border-radius: 12px;  
+    border: none;  
+    cursor: pointer;  
+    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);  
+    transition: background-color 0.3s ease, transform 0.25s ease;  
+    user-select: none;  
+}  
+
+.play-again-btn:hover,  
+.next-level-btn:hover {  
+    background-color: #43a047;  
+    transform: translateY(-3px);  
+    box-shadow: 0 14px 26px rgba(67, 160, 71, 0.6);  
+}  
+
+.play-again-btn:focus,  
+.next-level-btn:focus {  
+    outline: 3px solid #a5d6a7;  
+    outline-offset: 3px;  
+    box-shadow: none;  
+}  
+
+/* Animations */  
+@keyframes fadeIn {  
+    from {opacity: 0;}  
+    to {opacity: 1;}  
+}  
+
+@keyframes popIn {  
+    0% {  
+        transform: scale(0.7);  
+        opacity: 0;  
+    }  
+    60% {  
+        transform: scale(1.05);  
+        opacity: 1;  
+    }  
+    100% {  
+        transform: scale(1);  
+    }  
+}  

@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Puzzle Game</title>
+    <link rel="stylesheet" href="/pages/Games/styles,scripts/slideNumberGameStyles.css">
+</head>
+<body>
+    <!-- Start Screen -->
+    <div id="start-screen" class="start-screen">
+        <div class="start-screen-content">
+            <h1>Number Puzzle Game</h1>
+            <p>Slide tiles to solve the puzzle! Click Start to begin your challenge.</p>
+            <button id="start-btn" class="start-btn">Start Game</button>
+        </div>
+    </div>
+
+    <!-- Win Screen -->
+    <div id="win-screen" class="win-screen hidden">
+        <div class="win-screen-content">
+            <h1>Congratulations! 🎉</h1>
+            <p>You solved the puzzle!</p>
+            <div class="win-stats">
+                <p id="win-time">Time: 00:00</p>
+                <p id="win-moves">Moves: 0</p>
+            </div>
+            <div class="win-actions">
+                <button id="play-again-btn" class="play-again-btn">Play Again</button>
+                <button id="next-level-btn" class="next-level-btn">Next Level</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div id="game-container" class="container hidden">
+        <div class="theme-toggle">
+            <input type="checkbox" id="theme-switch" class="theme-switch">
+            <label for="theme-switch" class="theme-switch-label">
+                <span class="theme-icon">☀️</span>
+                <span class="theme-icon">🌙</span>
+            </label>
+        </div>
+
+        <h1 class="game-title">Number Puzzle</h1>
+
+        <div class="level-select-container">
+            <select id="levelSelect" class="level-select">
+                <option value="1">Level 1 (3x3)</option>
+                <option value="2">Level 2 (4x4)</option>
+                <option value="3">Level 3 (5x5)</option>
+                <option value="4">Level 4 (6x6)</option>
+                <option value="5">Level 5 (7x7)</option>
+                <option value="6">Level 6 (8x8)</option>
+                <option value="7">Level 7 (9x9)</option>
+                <option value="8">Level 8 (10x10)</option>
+            </select>
+        </div>
+
+        <div id="timer" class="timer">Time: 00:00</div>
+
+        <div id="puzzleContainer" class="puzzle-container"></div>
+
+        <button id="shuffleBtn" class="shuffle-btn">Shuffle</button>
+    </div>
+
+    <script src="/pages/Games/styles,scripts/slideNumberGameScript.js"></script>
+</body>
+</html>

@@ -53,7 +53,7 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     position: relative;
     overflow: hidden;
-    min-height: 80vh; /* Makes the hero much taller */
+    min-height: 85vh; /* Makes the hero much taller */
     display: flex;
     align-items: center;
     background: linear-gradient(135deg, rgba(35, 30, 50, 0.9) 0%, rgba(10, 9, 13, 0.95) 100%);
@@ -246,7 +246,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-badge {
     position: absolute;
-    top: 40px;
+    top: 70px;
     right: 40px;
     background: rgba(255, 106, 142, 0.15);
     border: 1px solid rgba(255, 106, 142, 0.3);
