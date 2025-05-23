@@ -7,9 +7,7 @@
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="/styles/base.css">
-  <link rel="stylesheet" href="/styles/index.css">
-  <link rel="stylesheet" href="/styles/modal.css">
+  <link rel="stylesheet" href="/styles/main.min.css">
   
 </head>
 <body>
@@ -48,7 +46,7 @@
     <div class="games-grid">
       <div class="game-card">
         <div class="game-image">
-          <img src="/api/placeholder/300/200" alt="Game 1">
+          <img src="/public/images/slideNumberGame.jpg" alt="Cyber Nexus Game">
           <div class="game-overlay">
             <span class="game-category">Action</span>
           </div>
@@ -65,7 +63,7 @@
       
       <div class="game-card">
         <div class="game-image">
-          <img src="../public/images/galantic commands.jpg" alt="Game 2">
+          <img src="/public/images/snakeGame.jpg" alt="Galactic Command Game">
           <div class="game-overlay">
             <span class="game-category">Strategy</span>
           </div>
@@ -82,7 +80,7 @@
       
       <div class="game-card">
         <div class="game-image">
-          <img src="../public/images/Eternalrelme.jpg" alt="Game 3">
+          <img src="/public/images/slideNumberGame.jpg" alt="Eternal Realms Game">
           <div class="game-overlay">
             <span class="game-category">RPG</span>
           </div>
@@ -99,7 +97,7 @@
       
       <div class="game-card">
         <div class="game-image">
-          <img src="/api/placeholder/300/200" alt="Game 4">
+          <img src="/public/images/snakeGame.jpg" alt="Tactical Ops Game">
           <div class="game-overlay">
             <span class="game-category">Shooter</span>
           </div>
@@ -332,61 +330,13 @@
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-  <script>  
-    // Load the header when the page loads
-    document.addEventListener('DOMContentLoaded', function() {
-      // Add loading class to body during initial render
-      document.body.classList.add('loading');
-      
-      // Fetch and inject the header
-      fetch('pages/header.html')
-        .then(response => response.text())
-        .then(html => {
-          document.getElementById('header-container').innerHTML = html;
-          // Initialize the header functionality
-          initHeader();
-          // Remove loading class after a short delay to ensure smooth transition
-          setTimeout(() => document.body.classList.remove('loading'), 200);
-        })
-        .catch(error => {
-          console.error('Error loading header:', error);
-          document.getElementById('header-container').innerHTML = '<p>Error loading header content.</p>';
-          document.body.classList.remove('loading');
-        });
-    });
-    document.addEventListener('DOMContentLoaded', function() {
-      const footerContainer = document.getElementById('footer-container');
-      if (footerContainer) {
-        fetch('pages/footer.html')
-          .then(response => response.text())
-          .then(html => {
-            footerContainer.innerHTML = html;
-            footerContainer.innerHTML = html;
-            document.getElementById('footer-container').innerHTML = html;
-            // Initialize the header functionality
-            initHeader();
-            // Remove loading class after a short delay to ensure smooth transition
-            setTimeout(() => document.body.classList.remove('loading'), 200);
-          })
-          .catch(error => {
-            console.error('Error loading footer:', error);
-            footerContainer.innerHTML = '<div class="error-message">Unable to load footer.</div>';
-          });
-      }
-    });
-    window.onload = function() {
-      // Force scroll to top on page load/refresh
-      window.scrollTo(0, 0);
-      
-      // Initialize your modals
-      setupGameCardModals();
-      setupTournamentModals();
-    };
-  </script>
+  <script src="/scripts/particles.min.js"></script> <!-- Re-added local particles configuration -->
+  <!-- Replaced inline scripts with main-index.js -->
+  <script src="/scripts/main-index.js" defer></script>
   
-  <script src="/scripts/header.js"></script>
-  <script src="/scripts/modal.js"></script>
-  <script src="/scripts/particles.js"></script>
+  <script src="/scripts/header.min.js"></script>
+  <script src="/scripts/modal.min.js"></script>
+  
 
 
 </body>
